@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Мой ритм</title>
+<style>
+:root{
+  --bg:#EFE7EE;
+  --bg-deep:#E4D7E4;
+  --card:#FBF7F8;
+  --plum:#5B3F5E;
+  --plum-soft:#7B5C7E;
+  --mauve:#A68CA8;
+  --peach:#F3B6A1;
+  --peach-deep:#E4927B;
+  --ink:#3A2A3C;
+  --muted:#8B788D;
+  --line:rgba(91,63,94,.12);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --shadow:0 10px 30px -14px rgba(91,63,94,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg-deep);min-height:100%;transition:background-color .8s}
+body{min-height:100%;font-family:var(--sans);color:var(--ink);font-size:16px;line-height:1.45;
+  background:radial-gradient(120% 60% at 50% 0%,#FAF4F8 0%,var(--bg) 55%,var(--bg-deep) 100%);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--peach-deep);outline-offset:2px}
+
+#app{max-width:440px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 18px) 20px calc(env(safe-area-inset-bottom,0px) + 118px)}
+
+/* ---------- Hero ---------- */
+.hero{text-align:center;padding:8px 0 22px}
+.portrait{position:relative;width:156px;height:156px;margin:0 auto 18px}
+.portrait img{width:100%;height:100%;object-fit:cover;border-radius:50%;
+  box-shadow:0 0 0 7px var(--bg),0 0 0 8px rgba(91,63,94,.22),0 24px 40px -18px rgba(91,63,94,.55);transition:box-shadow .8s}
+.orbit i{position:absolute;border-radius:50%;display:block}
+.orbit .o1{width:12px;height:12px;background:var(--peach);top:4px;right:-10px}
+.orbit .o2{width:7px;height:7px;background:var(--mauve);top:52px;left:-22px}
+.orbit .o3{width:5px;height:5px;background:var(--peach-deep);bottom:18px;left:-8px}
+.orbit .spark{position:absolute;right:-30px;top:58px;color:var(--peach-deep);font-size:14px;font-style:normal}
+.state-badge{position:absolute;right:2px;bottom:6px;width:42px;height:42px;border-radius:50%;background:var(--plum);color:#fff;display:grid;place-items:center;font-size:19px;box-shadow:0 0 0 4px var(--bg)}
+.greet{font-family:var(--serif);font-size:30px;line-height:1.15;color:var(--plum);font-weight:400;letter-spacing:-.01em}
+.date{margin-top:6px;color:var(--muted);font-size:15px}
+.thread-line{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;color:var(--plum-soft)}
+.thread-line::before{content:"";width:18px;height:1.5px;border-radius:2px;background:var(--peach-deep)}
+.state-chip{margin-top:14px;display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:rgba(255,255,255,.6);border:1px solid var(--line);font-size:14px;color:var(--plum)}
+.state-chip b{font-weight:600}
+
+/* ---------- Sections ---------- */
+.block{margin-top:26px}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding:0 4px}
+.block-head h2{font-family:var(--serif);font-weight:400;font-size:21px;color:var(--plum)}
+.block-head span{font-size:13px;color:var(--muted)}
+
+/* Mood of the day */
+.mood{margin-bottom:14px;padding:22px 22px 18px;border-radius:30px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.95);text-align:center}
+.mood q{display:block;font-family:var(--serif);font-size:21px;line-height:1.35;color:var(--plum);quotes:"«" "»"}
+.mood-act{margin-top:16px;display:inline-flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:999px;background:#fff;box-shadow:0 8px 18px -12px rgba(91,63,94,.5);font-size:14px;color:var(--plum)}
+.mood-act .pl{width:28px;height:28px;border-radius:50%;background:var(--peach);display:grid;place-items:center;font-size:11px;color:var(--plum)}
+.mood-act.done{background:transparent;box-shadow:none;color:var(--plum-soft)}
+.mood-act.done .pl{background:var(--plum);color:#fff}
+
+/* Focus capsule — the signature element */
+.focus{position:relative;overflow:hidden;border-radius:34px;padding:26px 24px 24px;color:#FBF1F0;
+  background:linear-gradient(155deg,#6D4C70 0%,var(--plum) 55%,#4A3250 100%);box-shadow:0 26px 44px -22px rgba(74,50,80,.8)}
+.focus::after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-70px;top:-80px;background:radial-gradient(circle,rgba(243,182,161,.35),transparent 70%)}
+.focus-label{font-size:13px;color:#E9CFD6;display:flex;align-items:center;gap:8px}
+.focus-label::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--peach)}
+.focus-title{position:relative;z-index:1;font-family:var(--serif);font-size:26px;line-height:1.2;margin:12px 0 22px;max-width:92%}
+.focus-row{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:1}
+.focus-sphere{font-size:13px;color:#E9CFD6}
+.focus-check{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--peach);color:var(--plum);font-weight:600;font-size:15px}
+.focus.done{background:linear-gradient(155deg,#7A5478 0%,#634566 55%,#51375A 100%)}
+.focus.done::after{width:320px;height:320px;right:-110px;top:-140px;background:radial-gradient(circle,rgba(243,182,161,.5),transparent 70%)}
+.focus.done .focus-check{background:rgba(255,255,255,.16);color:#FBF1F0}
+.focus.glow{animation:glow 1.4s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 0 rgba(243,182,161,.7),0 26px 44px -22px rgba(74,50,80,.8)}100%{box-shadow:0 0 0 22px rgba(243,182,161,0),0 26px 44px -22px rgba(74,50,80,.8)}}
+
+.invite{border-radius:34px;padding:26px 24px;background:linear-gradient(155deg,#FFF7F4,#F8E4E0);border:1px solid rgba(228,146,123,.25);box-shadow:var(--shadow)}
+.invite h3{font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.2;color:var(--plum)}
+.invite p{color:var(--muted);font-size:15px;margin:8px 0 20px}
+
+/* Cards */
+.card{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:24px;padding:16px 16px 16px 14px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.8)}
+.card + .card{margin-top:10px}
+.sph{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:19px}
+.card .txt{flex:1;min-width:0}
+.card .t{font-size:16px;line-height:1.3}
+.card .s{font-size:13px;color:var(--muted);margin-top:2px}
+.card.done .t{text-decoration:line-through;text-decoration-color:rgba(91,63,94,.35);color:var(--muted)}
+.check{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(91,63,94,.3);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.check svg{width:16px;height:16px;opacity:0;transition:opacity .2s}
+.done .check,.check.on{background:var(--plum);border-color:var(--plum)}
+.done .check svg,.check.on svg{opacity:1}
+
+/* Rhythm chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:11px 16px 11px 12px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid var(--line);font-size:15px;color:var(--ink);transition:background .2s,color .2s}
+.chip .ic{width:20px;text-align:center;font-size:15px}
+.chip.on{background:var(--plum);color:#FBF1F0;border-color:var(--plum)}
+.chip.on .ic{color:var(--peach)}
+.chip[disabled]{opacity:.55;cursor:default}
+
+/* Other tasks */
+.more-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.5);border:1px dashed rgba(91,63,94,.22);color:var(--plum);font-size:15px}
+.more-toggle .arr{transition:transform .25s}
+.more-toggle.open .arr{transform:rotate(180deg)}
+.more-list{margin-top:10px}
+.row{display:flex;align-items:center;gap:12px;padding:13px 6px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .txt{flex:1;min-width:0}
+.row .t{font-size:15px}
+.row .s{font-size:12px;color:var(--muted)}
+.row.done .t{text-decoration:line-through;color:var(--muted)}
+.dot{flex:none;width:9px;height:9px;border-radius:50%}
+.row .check{width:28px;height:28px}
+.mini-btn{flex:none;font-size:13px;color:var(--plum-soft);padding:6px 10px;border-radius:999px;background:rgba(91,63,94,.07)}
+
+/* Progress */
+.progress{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:26px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9)}
+.ring{flex:none;width:64px;height:64px}
+.ring circle{fill:none;stroke-width:6}
+.ring .bgc{stroke:rgba(91,63,94,.1)}
+.ring .fg{stroke:var(--peach-deep);stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring text{font-family:var(--serif);font-size:17px;fill:var(--plum)}
+.progress .p1{font-family:var(--serif);font-size:19px;color:var(--plum)}
+.progress .p2{font-size:14px;color:var(--muted)}
+
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 20px;border-radius:999px;background:var(--peach);color:var(--plum);font-weight:600;font-size:16px;box-shadow:0 14px 26px -14px rgba(228,146,123,.9)}
+.btn.plum{background:var(--plum);color:#FBF1F0;box-shadow:0 14px 26px -14px rgba(74,50,80,.8)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(91,63,94,.25);color:var(--plum)}
+.btn[disabled]{opacity:.45}
+.link{display:block;margin:14px auto 0;color:var(--muted);font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.evening-note{padding:20px 22px;border-radius:26px;background:linear-gradient(155deg,#FFF7F4,#F6E3E6);border:1px solid rgba(228,146,123,.2)}
+.evening-note .q{font-size:13px;color:var(--muted)}
+.evening-note .a{font-family:var(--serif);font-size:19px;color:var(--plum);margin-top:6px;line-height:1.35}
+
+/* ---------- Week ---------- */
+.page-title{font-family:var(--serif);font-weight:400;font-size:32px;color:var(--plum);line-height:1.1;padding:10px 4px 0}
+.page-sub{color:var(--muted);font-size:15px;padding:6px 4px 0;display:flex;align-items:center;justify-content:space-between}
+.wk-nav{display:flex;gap:6px}
+.wk-nav button{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.65);border:1px solid var(--line);color:var(--plum);font-size:16px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:20px}
+.day{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0 10px;border-radius:22px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);transition:background .2s}
+.day .wd{font-size:12px;color:var(--muted)}
+.day .n{font-family:var(--serif);font-size:20px;color:var(--plum);line-height:1}
+.day .dots{display:flex;gap:3px;height:6px}
+.day .dots i{width:5px;height:5px;border-radius:50%}
+.day.today{border-color:var(--peach-deep)}
+.day.sel{background:var(--plum)}
+.day.sel .wd{color:#E9CFD6}
+.day.sel .n{color:#FBF1F0}
+.sel-head{display:flex;align-items:baseline;justify-content:space-between;margin:28px 4px 12px}
+.sel-head h2{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--plum)}
+.sel-head span{font-size:13px;color:var(--muted)}
+.panel{background:var(--card);border-radius:26px;padding:6px 16px;box-shadow:var(--shadow)}
+.panel .chips{padding:14px 0 12px}
+.empty{padding:22px 4px;text-align:center;color:var(--muted);font-size:15px}
+.add-inline{display:block;width:100%;text-align:center;padding:14px;color:var(--plum-soft);font-size:15px}
+.rec-row .days-lbl{font-size:12px;color:var(--muted)}
+
+/* ---------- Rhythm ---------- */
+.big{margin-top:20px;border-radius:32px;padding:24px;color:#FBF1F0;background:linear-gradient(155deg,#6D4C70 0%,var(--plum) 60%,#4A3250 100%);box-shadow:0 26px 44px -22px rgba(74,50,80,.8)}
+.big .num{font-family:var(--serif);font-size:52px;line-height:1}
+.big .cap{color:#E9CFD6;font-size:15px;margin-top:6px}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:84px;margin-top:22px}
+.bars div{display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.bars b{display:block;width:100%;max-width:26px;border-radius:10px;background:var(--peach);min-height:4px;opacity:.95}
+.bars b.zero{background:rgba(255,255,255,.18)}
+.bars span{font-size:11px;color:#E9CFD6}
+.thread{display:flex;align-items:center;gap:16px;margin-top:14px;padding:18px 20px;border-radius:26px;background:linear-gradient(155deg,#FFF7F4,#F7E2DD);border:1px solid rgba(228,146,123,.25)}
+.thread .knot{flex:none;width:58px;height:58px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:24px;color:var(--plum);box-shadow:0 0 0 5px rgba(243,182,161,.35)}
+.thread .t1{font-family:var(--serif);font-size:19px;color:var(--plum)}
+.thread .t2{font-size:13px;color:var(--muted);margin-top:2px}
+.stat{background:var(--card);border-radius:24px;padding:18px 18px 16px;box-shadow:var(--shadow);margin-top:12px}
+.stat-top{display:flex;align-items:center;justify-content:space-between}
+.stat-top .l{display:flex;align-items:center;gap:10px;font-size:16px}
+.stat-top .v{font-family:var(--serif);font-size:22px;color:var(--plum)}
+.stat-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}
+.stat-dots i{height:8px;border-radius:99px;background:rgba(91,63,94,.08)}
+.stat-dots i.plan{background:transparent;box-shadow:inset 0 0 0 1.5px rgba(91,63,94,.25)}
+.stat-dots i.on{background:var(--peach-deep);box-shadow:none}
+.states-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;background:var(--card);border-radius:24px;padding:16px 10px;box-shadow:var(--shadow)}
+.states-week div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:18px;min-height:78px}
+.states-week span{font-size:11px;color:var(--muted)}
+.states-week em{font-style:normal;font-size:10px;color:var(--muted)}
+.envelope{position:relative;overflow:hidden;padding:24px 22px;border-radius:30px;background:#FFFDFB;border:1px solid rgba(228,146,123,.28);box-shadow:var(--shadow)}
+.envelope::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--peach) 0 18px,transparent 18px 26px,var(--mauve) 26px 44px,transparent 44px 52px);opacity:.7}
+.envelope h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--plum)}
+.envelope p{font-size:14px;color:var(--muted);margin:6px 0 16px}
+.envelope .link{margin:12px 0 0;display:inline-block}
+.joy{background:var(--card);border-radius:26px;padding:4px 20px;box-shadow:var(--shadow)}
+.joy-item{padding:16px 0;border-bottom:1px solid var(--line)}
+.joy-item:last-child{border-bottom:0}
+.joy-item .jt{font-family:var(--serif);font-size:17px;line-height:1.4;color:var(--ink)}
+.joy-item .jd{font-size:12px;color:var(--muted);margin-top:4px}
+.quiet{margin:28px 0 0;text-align:center;font-family:var(--serif);font-size:18px;color:var(--plum-soft);line-height:1.4}
+
+/* ---------- Tab bar ---------- */
+.dock{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);display:flex;justify-content:center;gap:10px;z-index:20;pointer-events:none}
+.dock[hidden]{display:none}
+.tabs{pointer-events:auto;display:flex;gap:2px;padding:6px;border-radius:999px;background:var(--plum);box-shadow:0 18px 34px -16px rgba(74,50,80,.85)}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:74px;padding:8px 12px;border-radius:999px;color:#D8BFCB;font-size:12px}
+.tab svg{width:21px;height:21px}
+.tab.active{background:rgba(255,255,255,.14);color:#FFF}
+.fab{pointer-events:auto;width:62px;height:62px;border-radius:50%;background:var(--peach);color:var(--plum);display:grid;place-items:center;box-shadow:0 18px 30px -14px rgba(228,146,123,.95)}
+.fab svg{width:26px;height:26px}
+
+/* ---------- Sheet ---------- */
+.veil{position:fixed;inset:0;background:rgba(58,42,60,.35);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.veil.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;max-width:480px;margin:0 auto;max-height:92vh;overflow:auto;
+  background:#FBF6F8;border-radius:32px 32px 0 0;padding:12px 22px calc(env(safe-area-inset-bottom,0px) + 24px);
+  transform:translateY(105%);visibility:hidden;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s linear .32s}
+.sheet.show{transform:translateY(0);visibility:visible;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.grab{width:42px;height:5px;border-radius:9px;background:rgba(91,63,94,.18);margin:0 auto 18px}
+.steps{display:flex;gap:6px;justify-content:center;margin-bottom:18px}
+.steps i{width:22px;height:4px;border-radius:9px;background:rgba(91,63,94,.14)}
+.steps i.on{background:var(--peach-deep)}
+.sheet h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.2;color:var(--plum);text-align:center}
+.sheet .hint{text-align:center;color:var(--muted);font-size:14px;margin:8px 0 20px}
+.states{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.st{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 6px;border-radius:22px;background:#fff;border:1.5px solid transparent;font-size:14px;color:var(--ink);box-shadow:0 8px 20px -14px rgba(91,63,94,.4)}
+.st .e{font-size:24px}
+.st.on{border-color:var(--plum);background:#F5ECF3}
+.pick{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 16px;border-radius:20px;background:#fff;border:1.5px solid transparent;margin-bottom:8px;box-shadow:0 8px 20px -16px rgba(91,63,94,.5)}
+.pick.on{border-color:var(--plum);background:#F5ECF3}
+.pick .t{flex:1;font-size:15px}
+.pick .r{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(91,63,94,.3);flex:none}
+.pick.on .r{background:var(--plum);border-color:var(--plum);box-shadow:inset 0 0 0 4px #F5ECF3}
+.field{width:100%;padding:15px 18px;border-radius:18px;border:1.5px solid rgba(91,63,94,.15);background:#fff;font-size:16px;margin-bottom:14px}
+.field:focus{border-color:var(--plum);outline:none}
+textarea.field{min-height:96px;resize:none;font-family:var(--serif);font-size:18px}
+.lbl{font-size:13px;color:var(--muted);margin:4px 2px 8px}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.seg button{padding:10px 14px;border-radius:999px;background:#fff;border:1.5px solid rgba(91,63,94,.12);font-size:14px}
+.seg button.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+.seg.small button{padding:8px 12px;font-size:13px}
+.wds{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:14px}
+.wds button{padding:11px 0;border-radius:14px;background:#fff;border:1.5px solid rgba(91,63,94,.12);font-size:13px}
+.wds button.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:18px;background:#fff;margin-bottom:18px}
+.sw{width:48px;height:28px;border-radius:99px;background:rgba(91,63,94,.18);position:relative;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.sw.on{background:var(--plum)}
+.sw.on::after{transform:translateX(20px)}
+.move{padding:14px 0;border-bottom:1px solid var(--line)}
+.move .t{font-size:15px;margin-bottom:10px}
+.move .acts{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:6px}
+.move .acts button,.move .acts select{width:100%;min-width:0;padding:9px 6px;border-radius:999px;background:#fff;border:1.5px solid rgba(91,63,94,.14);font-size:13px;text-align:center;text-align-last:center;-webkit-appearance:none;appearance:none;color:var(--plum)}
+.move .acts [data-a="rel"]{color:var(--muted)}
+.move.resolved{opacity:.55}
+.move.resolved .acts{display:none}
+.move .res{font-size:13px;color:var(--plum-soft)}
+.move .res:empty{display:none}
+.done-list .row .check{pointer-events:none}
+.sheet .btn{margin-top:6px}
+
+/* Breathing */
+.breath{position:relative;width:220px;height:220px;margin:6px auto 18px;display:grid;place-items:center}
+.breath .halo{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(243,182,161,.55),rgba(166,140,168,.15) 65%,transparent 72%);transform:scale(.62);transition-property:transform;transition-timing-function:ease-in-out}
+.breath .core{position:relative;width:118px;height:118px;border-radius:50%;background:linear-gradient(155deg,#6D4C70,var(--plum));color:#FBF1F0;display:grid;place-items:center;text-align:center;font-family:var(--serif);font-size:19px;line-height:1.2;box-shadow:0 18px 30px -16px rgba(74,50,80,.8)}
+.breath .core small{display:block;font-family:var(--sans);font-size:12px;color:#E9CFD6;margin-top:4px}
+.practice-text{text-align:center;color:var(--ink);font-size:15px;margin:0 6px 18px;line-height:1.5}
+
+/* Letter */
+.letter{background:#FFFDFB;border-radius:24px;padding:26px 22px;margin:4px 0 18px;box-shadow:0 12px 30px -20px rgba(91,63,94,.5);font-family:var(--serif);color:var(--ink);font-size:17px;line-height:1.6}
+.letter p + p{margin-top:12px}
+.letter .hi{font-size:22px;color:var(--plum)}
+.letter ul{list-style:none;margin:10px 0 0}
+.letter li{padding-left:18px;position:relative;margin-top:6px;font-style:italic}
+.letter li::before{content:"";position:absolute;left:2px;top:.72em;width:7px;height:7px;border-radius:50%;background:var(--peach)}
+.letter ul + p{margin-top:16px}
+.letter .sign{text-align:right;color:var(--plum);margin-top:18px}
+
+/* Petals & toast & stub */
+.petal{position:fixed;z-index:70;pointer-events:none;border-radius:60% 0 60% 0}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 100px);transform:translate(-50%,20px);opacity:0;z-index:60;max-width:calc(100% - 40px);text-align:center;
+  background:var(--plum);color:#FBF1F0;padding:13px 20px;border-radius:22px;font-size:14px;transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.stub{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.stub .moon{width:84px;height:84px;border-radius:50%;background:linear-gradient(155deg,#FFF4EF,var(--peach));display:grid;place-items:center;font-size:34px;margin-bottom:22px;box-shadow:0 20px 34px -18px rgba(228,146,123,.9)}
+.stub h2{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--plum)}
+.stub p{color:var(--muted);margin:10px 0 24px;max-width:300px}
+.stub .btn{max-width:260px}
+.loading{min-height:80vh;display:grid;place-items:center;color:var(--muted);font-family:var(--serif);font-size:20px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">Настраиваю твой ритм…</div></div>
+
+<div class="dock" id="dock" hidden>
+  <nav class="tabs" aria-label="Разделы">
+    <button class="tab active" data-tab="day" aria-label="Мой день">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.8v2M12 19.2v2M2.8 12h2M19.2 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M5.5 18.5l1.4-1.4M17.1 6.9l1.4-1.4"/></svg>
+      День
+    </button>
+    <button class="tab" data-tab="week" aria-label="Моя неделя">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="4"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>
+      Неделя
+    </button>
+    <button class="tab" data-tab="rhythm" aria-label="Мой ритм">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3.5l2.5-6 4 12 2.5-6H21"/></svg>
+      Ритм
+    </button>
+  </nav>
+  <button class="fab" id="fab" aria-label="Добавить дело">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+</div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="application/json" id="fallback-data">{"app": {"name": "Мой ритм", "ownerName": "Татьяна", "eveningFrom": 19, "demo": true}, "spheres": [{"id": "shop", "name": "Магазин · Авито", "icon": "🛍", "color": "#E8A48F"}, {"id": "growth", "name": "Развитие", "icon": "📖", "color": "#9C85B8"}, {"id": "content", "name": "Контент", "icon": "✨", "color": "#D98FA6"}, {"id": "projects", "name": "Проекты", "icon": "🌸", "color": "#7E5B82"}, {"id": "personal", "name": "Личное", "icon": "☕", "color": "#C9A27E"}], "states": [{"id": "calm", "name": "Спокойствие", "icon": "🌙", "bg": "#E9E7F2", "bgDeep": "#D9D5EA", "phrases": ["Мне некуда спешить. Всё важное успеется.", "Я выбираю тишину внутри, что бы ни происходило снаружи.", "Спокойствие — это не отсутствие дел, а опора среди них."], "practices": [{"title": "Длинный выдох", "text": "Вдыхай на четыре счёта, выдыхай на шесть. Выдох длиннее вдоха — и тело само успокаивается.", "inhale": 4, "exhale": 6}, {"title": "Опора в стопах", "text": "Почувствуй стопы на полу. С каждым выдохом отпускай напряжение вниз, в землю.", "inhale": 4, "exhale": 6}]}, {"id": "energy", "name": "Энергия", "icon": "🔥", "bg": "#F6E7E1", "bgDeep": "#EFD4CA", "phrases": ["Во мне достаточно сил на то, что действительно важно.", "Я начинаю с малого шага, и энергия приходит в движении.", "Моя энергия идёт туда, куда я направляю внимание."], "practices": [{"title": "Бодрое дыхание", "text": "Короткий вдох носом, ровный выдох. Представь, как с каждым вдохом тело наполняется теплом.", "inhale": 3, "exhale": 3}, {"title": "Солнце внутри", "text": "На вдохе почувствуй тепло в центре груди, на выдохе — как оно растекается по телу.", "inhale": 4, "exhale": 4}]}, {"id": "lightness", "name": "Лёгкость", "icon": "🪶", "bg": "#F2EDF3", "bgDeep": "#E6DDE9", "phrases": ["Сегодня я разрешаю себе делать красиво, а не идеально.", "Лёгкость — это когда я не несу то, что можно отпустить.", "Мне не нужно заслуживать хороший день. Он уже мой."], "practices": [{"title": "Отпустить плечи", "text": "На вдохе подними плечи к ушам, на выдохе мягко урони их. Почувствуй, как становится свободнее.", "inhale": 4, "exhale": 6}, {"title": "Улыбка изнутри", "text": "Дыши спокойно и чуть приподними уголки губ. Заметь, как меняется ощущение в теле.", "inhale": 4, "exhale": 5}]}, {"id": "confidence", "name": "Уверенность", "icon": "💎", "bg": "#EDE3ED", "bgDeep": "#DDCBDD", "phrases": ["Я знаю, кто я, и мне не нужно это доказывать.", "Мой голос важен. Я говорю спокойно и ясно.", "Я доверяю себе и своему пути."], "practices": [{"title": "Прямая спина", "text": "Выпрями спину, раскрой грудь. На вдохе расти вверх, на выдохе становись устойчивее.", "inhale": 5, "exhale": 5}, {"title": "Ладонь на сердце", "text": "Положи ладонь на грудь и дыши в неё. Скажи про себя: «Я на своей стороне».", "inhale": 4, "exhale": 6}]}, {"id": "inspiration", "name": "Вдохновение", "icon": "✨", "bg": "#F6E9EF", "bgDeep": "#ECD4E0", "phrases": ["Идеи приходят, когда я замедляюсь и слушаю себя.", "Всё, чего я касаюсь с любовью, становится красивым.", "Сегодня я замечаю красоту в простых вещах."], "practices": [{"title": "Три красивые вещи", "text": "Дыши спокойно и найди взглядом три красивые вещи вокруг. Задержи внимание на каждой.", "inhale": 4, "exhale": 5}, {"title": "Дыхание-волна", "text": "Представь, что дыхание — это волна: вдох поднимается, выдох мягко отступает.", "inhale": 5, "exhale": 5}]}, {"id": "tenderness", "name": "Нежность", "icon": "🌷", "bg": "#F7EBEF", "bgDeep": "#EEDBE3", "phrases": ["Я говорю с собой так же нежно, как с близким человеком.", "Мягкость — это тоже сила.", "Сегодня я бережна к себе в мелочах."], "practices": [{"title": "Объятие себя", "text": "Обними себя за плечи. Дыши медленно и почувствуй тепло собственных рук.", "inhale": 4, "exhale": 6}, {"title": "Тёплое дыхание", "text": "Представь, что вдыхаешь тёплый мягкий свет, а выдыхаешь всё лишнее.", "inhale": 4, "exhale": 6}]}], "recurring": [{"id": "r-train", "title": "Тренировка", "sphere": "personal", "days": [1, 3, 5]}, {"id": "r-claude", "title": "Урок по Claude", "sphere": "growth", "days": [1, 2, 3, 4, 5]}, {"id": "r-channel", "title": "Пост в Telegram", "sphere": "content", "days": [1, 3, 5]}, {"id": "r-stories", "title": "Stories", "sphere": "content", "days": [1, 2, 3, 4, 5, 6]}, {"id": "r-avito", "title": "Новые товары на Авито", "sphere": "shop", "days": [2, 4]}], "tasks": [{"id": "t-1", "title": "Снять Reels про внутреннюю опору", "sphere": "content", "dayOffset": 0, "important": true}, {"id": "t-2", "title": "Созвон с клиенткой по сопровождению", "sphere": "projects", "dayOffset": 0, "important": true}, {"id": "t-3", "title": "Сделать практическое задание к уроку 4", "sphere": "growth", "dayOffset": 0}, {"id": "t-4", "title": "Ответить на вопросы в канале", "sphere": "content", "dayOffset": 0}, {"id": "t-5", "title": "Прогулка без телефона", "sphere": "personal", "dayOffset": 0}, {"id": "t-6", "title": "Анонс женской встречи", "sphere": "projects", "dayOffset": 1, "important": true}, {"id": "t-7", "title": "Сфотографировать новые товары", "sphere": "shop", "dayOffset": 1}, {"id": "t-8", "title": "Записать подкаст", "sphere": "content", "dayOffset": 2}, {"id": "t-9", "title": "Программа ретрита: черновик", "sphere": "projects", "dayOffset": 3}, {"id": "t-10", "title": "Встреча с подругой", "sphere": "personal", "dayOffset": 4}], "stats": [{"id": "training", "label": "Тренировки", "type": "recurring", "ref": "r-train", "icon": "🌿"}, {"id": "content", "label": "Дни с контентом", "type": "sphereDays", "ref": "content", "icon": "✨"}, {"id": "growth", "label": "Дни учёбы", "type": "sphereDays", "ref": "growth", "icon": "📖"}], "milestones": [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 365], "phrases": {"morning": "Каким ты хочешь прожить этот день?", "progressLow": "Хорошее начало", "progressMid": "Ты в своём ритме", "progressHigh": "Красивый день", "evening": "День сделан. Спасибо себе.", "celebrate": ["Главное сделано. Остальное — уже подарок.", "Ты выбрала — и сделала. Вот она, опора.", "Красиво. Запомни это чувство.", "Фокус дня закрыт. Можно выдохнуть."], "allRhythms": "Ритм дня собран ✦", "milestone": "{n} дней в ритме. Ты возвращаешься к себе снова и снова.", "letterClosing": "Ты не должна была успеть всё. Ты была с собой — и это главное.", "letterSign": "Твой ритм ✦"}}</script>
+<script>
+(function(){
+"use strict";
+
+/* ================= Telegram =================
+   SDK подключается в фоне: ждём до 3 секунд, потом запускаемся в любом случае. */
+var TG = null, useCloud = false;
+function loadTelegramSDK(cb){
+  if(window.Telegram && window.Telegram.WebApp) return cb();
+  var finished = false;
+  function fin(){ if(finished) return; finished = true; cb(); }
+  var sc = document.createElement("script");
+  sc.src = "https://telegram.org/js/telegram-web-app.js";
+  sc.onload = fin; sc.onerror = fin;
+  setTimeout(fin, 3000);
+  document.head.appendChild(sc);
+}
+function setupTelegram(){
+  TG = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+  if(TG){
+    try { TG.ready(); TG.expand(); } catch(e){}
+    try { TG.BackButton.onClick(onBack); } catch(e){}
+  }
+  useCloud = !!(TG && TG.CloudStorage && TG.initData && TG.isVersionAtLeast && TG.isVersionAtLeast("6.9"));
+}
+function inTelegram(){ return !!(TG && TG.initData); }
+function haptic(kind){
+  try{
+    if(!TG || !TG.HapticFeedback) return;
+    if(kind==="success") TG.HapticFeedback.notificationOccurred("success");
+    else TG.HapticFeedback.impactOccurred("light");
+  }catch(e){}
+}
+var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+var PHOTO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAFoAWgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD1BRilU5NKOlCqc+1cZ3ImQdqnjxUSECnA4qSifgUvTnNQq9OLZoYErPUL5NIWpokB75qGNDCua5nxz4eGt6W5jj3XUXMfYn2rqGOKazihOzuDV1Y+ZNRtpbW5KujJNEeVPBUjtWzpusLeQGFzhxXrfi7wpaeILcuu2K9UfLIo+97GvAdQtZ9K1N43BSWJiHFbtqa0MFem9djoJtsZyxOD2qq43DvU9tPBfRKzf6wcYNJJHsJHFSjTfUhiiG7LcHtUy2rSN8pwvrTEPzDccVoWwABOc+9MEi5ZiFowmCWA65rTt7MR4bHWslVOcrxWvG+IhubJxUMtHmvjBQfEcpPeV2x+VdLp4xZxj3H9K5rxSfM8TOPdj/KunhGy3jHpg/qK6aW5zz2G3PWf/dAqpqLg3JX2A/Sppm3CU564qpqAP2tyP71dVzEsDH2W1UcEyE4plxIfsdxk8bG/kaXbhLb1DEVUvpAmnXbekbn/AMdpqQmj2n4BJ5Xwn0PtvEj/AJyGvQS2a4j4NR+T8LfDS9M2u782JrsWGSvNeXVdpM7Y/CiRh61518WPBqa7YtqFnGv9oQLlgBzIo/qK9EzUTAZqYyG4pnx3c27wsVYEEc816d8P/HgthBaXLuZsBWLkBWpfi14aGn6iL23jxbXJJ4HCPnpXl8qbT6EHOfStJxU0YRk4Ox9c292txGroflYZFOkkA6GvPtL1ia1s7eTlovKX5gp+YYHPtWP4q+KVvp1s6W8Re4A/i6ZrkjFt2R1N2VzofiL44tvC9gANst5LwkWeR7mvnrUb298Q6q97fuzux+Vc8KKr6hfXniLVpNQvzulkPyr2Ueldf4X0JbkB7hStuv3iByx/wrthBU1dnNObm7Ix7WIRqAMACrMgLIfLzmvVrTRrKKNTHbx8dCVq+LaALjyIz/wEVDqoFSZ4Ld3V6GA86UBegyeKji1nVIhhbqTAOcV7Fq/h3SrvO+18tz/FHxXK3ngMNk2d0ueyuMU04sHGUTmYvG+tREDzQEHfk1vaX8SrqE4nJkx61gan4b1CwY+bbsy/3kGRWNJZHkFdpHrVckSeeS3PYLL4jQ3G3z4jnt6V01nrtnqONswiPcE4r5/t5ZLfb0YDsa3tO1MTOizyhSOQpFRKmrFxqdz3qKaNgAjBs96m+8oGAa8Th1+a2lzbzFNpy25813WkeL4JkRZ22yGsZQaNoyR2aId3yp29KKhsr6GWMlHBJ75orMs20JPXpUy4wOetQWkpHyvyp7GrhWBUyr7RXU2jKwzGKctLt3JlWDCmHKY3cUhkh4FMJNKTxTCeaTANxHFOjUE5700e9PA+X3qRikevNRyYKmnkZB5qBwxOO1IBiOFI7V5v8UvC73co1bT4xIwXE6KOcDo39K9FeLPQ81VnaSFG3gNHjkHuKcZcrFJcysfNpZ7R98Z/Ct/T7yO8hGcCTvmm+NNP/srWvJC/uJ1M0fsMnIrBVHifzLckEdq6HG+qMFLlfKdHJAVapLeZkO09KqadqUdxFskIRx+dX44lKgiszZamlaqJcYPNXxFjGKzbApCXZt288KvataNg44qWWjy7ViX8YOp9WH/j1da7AIgx04/WuUuiH8b3B6gMf/Qq6Oc7t3XC4P6100nZnNL4SGZxsk/CpL5U3FkYeYSML1qnOjrFJk5wR/OppPkuFfaGK4OGGQeO9b3MrD5pzJ5SBQNnzMc1ja27Jod8/YQvV/OPtePxPuayvETY8O33/XEj+VWnoJn0n8N4vs3gDw5Ef4bCL/0HP9a6ItWT4aTyfDOkRjolnCOP9wVpE15dTWTO6OyJC3IppbimZ4pDzUjM3xPpcetaFd2L4zIuUOPuuOh/OvmLUrOW2uZoJ0KXETlHQ9iK+r84ryn4veGcyf27aKcnC3IUfk1a05dGY1Y9UeWx+JdTs9K+wI7GIDCjoefU1ziafcXk3m3DbiT0PQV0DAZzsBq0ERLfcSMnoK1UUnoY8za1K+jaT5tysMR3OeSx7CvVbK1SKJEVAAoAA9K5/wAGWIht2nKhmmIPPZR0rsY0HUjFYVZ3ZtThZXJ0XCAAUhpQwAoPWsUbEFwoOC3rVWZQUJHWrs4GKoSNjiqQMy7kSgMEbI7g1gaha28xJuLcbvVeDXVSpuWsu6t92Tg1pGViJRucXc6TExzExx6EVnXemmIcqQexHSuvu7M8FQaqLK1s7LLGJIyMFW6Vop9zN0ziprM85JNT2N3JbyJ53zION3cCt2a2guJW2qYlP5CqkujyFGaIiQDsOv5U7pkcrR2GganALfMMzbvXPFFcJA8+nzAop/2kPQ0Vm4GiqH06vapAeMHpTEGVHBp2DUtGpNE+MkcVMJ0cAOobHTPaqgPbFBz6UgsXZI/l3RsCP7pquCw6g9fSmLIV+Wnq2e9AWJh2p24BTzVdpCBimCTJVSwyelIdiZn4qOObJ5zQ67etSAx9hzQA5mXtis3UU863kTJXIxkVd24JIz+NVrp1toJJZmCooJLHtQI8I+JJW31WwsUdpJYo2kkJJO0MeB+mayLKNpWEcYJPWpfEl8uoeLL+VBhBtjGTn7oxV3QgFmklxyowp+tda0icr1mZ1xZFZAR8rCtTTNRZCIrwDA4DetaciQ3OFlHzk4BHGKyr7TJIn7sOxFToykpQNpIp55N8O0Qr1J71sWMRUhjnHFcto+stp8qx3QDxdMN612L6jayWkckTJnblgD0rOUWmdEZJnkcLeb4wu2HPzY/U1vX2eisyg8Hb161zmiMX1u6k7mQfyz/Wtu4csSpHAI5/Otqe5zv4R0sh+yzZPoP1qWdm80E9gP5VQdz9nlwf4h/Orsh/fgHrxW1yCtvyLrtl6zfFTbfDt0OzKo/UVeJ/dXP/AF0rH8YMf+EcnHun86tPQlo+s9IAGkWIXgC3jH/jgq3mqOhZ/sTTt3U2sRP12CruK8tu7O1bIXNBFJSFu1AxrHFQzpFcwSQzKHikUqynuD2pLmVUQljiqsVyrEfNjNHoG54n468Mv4e1UomTZzZaFj1A/un6VzsUTSypEerELXf/ABz1aIxadbxOnmROWODzjHSuN8NA3t4sgXIjG459a6E3ynLKPvWO9shHaxqqjARQBirUd8JBjpisjzxnPJqMTBXOKwaudCdjolmB6VKJuKw4rg8VaE+V96Vh3Ls8u4Cq5yRzUKy/LzTllBXigB/FQzhTkVIJAeKib5lNAFGVVwRWfdW6yDkCtOVOpqpICR0ouOxkyWoICrH261Ta12PkSE1tyRZ2/SopLcYoTYmjKvIY5lVAnmtjq4x+FFX2h2cr1oq1JkOJ7UqMBuLj6Yp+eKQbe4INNePcDjrT3KITcEyBIwWOccdqsKeOetEUYUBRxUxUNjHXvUsdxoCnrQw209DsYcZqGd8528mpGGQRzUTgKdy8N04pqMc81IGAPtSAcofqRnj8acM4BpVkC9O9Bx1FMBGY4HNcZ8UtaXTfDUpYZZiAqk/eOeB+ddjIQFySMV4Z8XdSbUNbhso2zFCN7AevatKcbyIm7I4vTRJI5eTlmyWJ7k11GmMIIGJ7msO2gKx7gKh/tGe2m2yfNDnp6e9dMjli7O516zncGP4VPFPIZS2cg9qybedJo1ZHV19Qa27RVKg+1ZPTY6F7xU17RJbyxe4tE3SryUHce1cPpmtXFtNPaMGwPlwwwQa9XtJ5EZfLOOeTTm0LTLzWI7uWCKNpZVe4cDkgZ5+pyKSkuonBrVHlGggreTMRyZSfwAFbG/B5545qW+torPxZqcEGPKimdQR0qG4Kl5NnTJ5/lWkNyWtLEedy7ccOw/z+tW5G3XlVoVHm2w6/Pmnj/j7/ABrUgiB/dTH1krF8V5bSBGf45o1/WteNv9HIPVpM1leIR5i6dGOTJeRiq6CPrmxUR2NsgGAkSL+SgVYpiDagHoBTicAV5nU7FshGPSopEDITnBpXkGDgVR1Hz5oCLWbyWA6kZH5UxFa6jCOPPuc5OAmeW+g6muH8eapPY20kNhdGC4I5xyQP6V12n6QbVmup5PtOpSDDz7cEj+6o/hWuL+LGlxxQRaoVOCoiYD+8Dxn8/wBKcdxN2Vzx3Wrm4vrtXuyTI3OS2SRXYeCEEOmSSngu2Mn0rkjGbi6Z3wM8cV02n3AgtRCvT2rqa0sc1/eubk0wGdpqmt0RIfmqq04I61AzZORWfKaORuw3JI61djugMAkVz0EwVeTU/wBpAIzScAUjeM2MnPFLHMTWNDfIR5ZXPfdWlEwCdcipcbFp3L0b+9IznHFVFfBqYnK1Fi7i7ic0wqKVRgGgjINIZAwB6dBUbjI4FSYOTQEOKBlcpnAxRUzLgUUCPYNydBzTTlRkAUyAI/XrU+0j7orRO5BAUY8hvxqaKLALHrQFKnJGakaUL8qLSaGQsDjLH8ahkzjilliaeQlX2kDgCof9IR8Moceo4qRhyetFOAbGWFAj3GpsUhB3pwk45OKcsOCSWBXHTFZ2sXkVnZSPjdjoo6sewprUTK3iDVIrO0eRpAOMA14FdynUdYnnYltzYz9K3/G+stLNJCJ991IcOg+7CP7orO8MaZLf3sNrCMFh8zHsB1NdVKPKuY5qsubRHa+DfD8c9h9omVSHPBIz7cVQ8XeCils9xYKX7vH7eor0Wzto7O1it4BiONQo/CpGG4YrNzbdy/Zpqx84QNNpdyWwxTOGUiuy0i8S5jR4TkNxjuK6Txn4ShvA1zZqEm/jUfxD1+tYvh/QHtZlYuIlPVM805yVrhCMk7G3ZwOp5yT7VpG2uzBIYLd2cKdvHetzSLGFQoXD5/irpIYlVcAfpXM6qudHJoeJ6T4K127mv7vUIPLmlkLpz1yTT18CapEDvjdiRzivclAzgtgU8gY5GRW0K6RlKmfP58PXVtd2yyRSZBJPHoKxTGyTkt2z1r6Tnjt3/wBco/EVy/iDwNZalulsyscpHboa3jVUjNwseErnyE46sTUAiE/iXw3Cwyr6hHkeuCK6TXPDl9o0yR3ELLhsnHIx9axtK2yeO/CIxz9vRiPYEVo3oyFufVhHJqKTJU4qaUgE4qvu45rgOlEZyOMVUu5HUBIzhn/l61PNdwxKfMkRfqcVQHk3E5mBVkIwCG60wLMDskRBABHf1rjPivMJPDBgUHLsD+QzXTXF5HbxszTRoB13GvMfiD4hgurdoopVYIpJKnI6VUFqTJ6HnOnP5hO4fWttBDGozk/Q1zenOQCenFaUMrAjJJU10nKa4nhA+7S/aFJ+6MfSqQIIzT41weAcUWGX4vLkxuBH0qCcESEA8CiPJ6HvTo1UOzMwOSM0DEgYq3PNa1tOSRUUNssmDGoq9bWb54UE/WpkVEsxLvOe1WMYFLBC/wDGAPoasrbM4yMYrCRsisvK4qSBM5p7wPCuSpxUqKEhy3DHmpZRWaPAOQBUGDVuRwDzxVeQhE3McCpGRsKKC4IyuCaKYj0+OCZGzuBHpVxXI4NcyfHGhqDm+iH9aqT/ABB0SM8XaN9B0rblZHMjs2k4wRUbkbcqTn3rim+IuhDH+mIWPamf8LF0R22faQue9JxY+ZHZxPz71MsyhSCM5rkIfGOknH+lJzU6eKtMk4S5iJ/3qizHdHSuyEcVC8iqvHNc1deJLaNcpKhY8AA1j6h4rRUIVsN7djTUWwcjqr/URBA7blG31OOa8o8ceK7iNBF5sTXDZCrESVXPfJ6ms7xJ4kmZsJM0kY6ZP864eWR7u6aaQkk9K1hTMp1Oxf0+IyMZZSXkZuWPJJr2XwFoxsbMXEi/v5Rn6D0rz/wPor6lqcMO3KD53P8AdAr3BFjijCrwBwBTqOysiKavqyJgPpVcXCoTuI4rF8SeI7XS5GjZ90n9xa8+1HxnPMzCMhFPGM1z3OlI7jXfENrCCBINy9q5i38TWltP504SRuytyBXn13dT3VwxUsc9azL6yvZDuUNzSavoy15HvNt8TbcqoKQKvQlcAit/TfGWnXfP2qNfqa+W002+Vg2GBFW4Zry2blW296zdJFczPrWO8juEDQyo6noVal+1GM4ZsV80abr+oWJWS1uHQjqueDXpXhzx8t3bql+oJ6E0vZNai5kz1L7VE42yDINQG1ZXMthcMh6mNuRWHa39tcLut5hg9ia0IbhomDZGCOo5qotolpMtSzJcR+RqlupB45FcLqHgKKLxfouuaa4+z2c++SLvj2/Su8M8VymJQpHr3qlOstvlof3kXt1FdEZuxm4dTNvfiLpFhOYrlpS65yoXmvNPFnxZ1G+d4dIjNpAWxv6yFf6V13inQNN8RwnzVEV2BlZV4Off1rynVvDcukSsl2NwB4dRw1VGKM5NlG61y7n+9Nczf78h5NNtde1S3J8iSZM9P3h6Vq6N4f1DV3Kadp88gHVyNqj8TXV2Xwu1WTDXc1rbj+7uLNn8Biq0ITkedz61q9yxEk0jA9dzE1A32ucATltvXA7/AFr1uL4Vyg7m1GAEdghqdvhxKoOL2E/8BNNSihWkzy23tyIeTgnmr1lLGhCMRu7Z710+r+BNSs1MkOydB1CNz+VcXfWkkcjRzKyMDyCMEUXT2FZrc6CZI1x5RLAqD+lSwSJGivIAVB6VzNjeS2zBXYlM5+ldFIFmt454xgMeQOn1/wDrVVwJn8qSLerlWJ44qpGXkkzK42g8DNL92JkzgU2NDgYNMDdsihUKDitTHlhSCQD6GuXgkZW4rWt5mcfMxNRJFxZsxtlhtJrThLBOHw3vWFaKWb7xGPetiAsMbvpWMjVMmBmPBYYqeSPEJVsFiPXpSGPdHwafFEvkuZGwqKWY+gAzUMoxpUTzFQyDzSMhc84+lNK4O1iSOwNZukF5vNvpf9ZOxK8dF7Cr7ZY5oasFxdoAyKKTJRWJPGKKQzx4WLkjcxyOlDWLnu1e6TeEtCinMbW0oHYl6kXwLocxBX7QoP8Adau32iOT2cjwNtPIPC5qB7ORGyqkHsRX0Sfh1oDrxJdg/wC8P8Ko3Hwz0ljmO8ul+qg0+ZBySPAiZ0OSW/Gnx3l1F0OfpXtc/wAMbEA41Bv+BRisq4+HNopIj1BSQO8fH86XulJTPNINUukO5txNSTandzrjLKDXfP8ADl44y8d3A4x6EGuX1LT1sHKPgnO3I5FC5XsKXMtzASF2bMrMxq/bQhMySD5V5x61IoU/dFa2m2P2iSKBRukdgAB3NW2kiNz1r4d6UNN8PRzSKPtN1+8c45GegqbxXrKaRp1xNkGZV+RT/ePStu3T7Fp0EZ+9FGAx9TXjfxf1n7PamHOXYkn3J4H5DNcMpOUrI7YRtG7POdZ12e6vZGaQszMSWJ6k0mmJcXsgWPJJNc7aq91cBV5Ymvdvhj4VURR3M65I6ZHeiolTRpTj7R2Ra8H+DkNukl2hMh7HpXYr4WsyoAt1x7iujtrYRkAAccYrShtiQSBXFKblsejGnGCOEuPB9lg7YsVz+o+DYSW2oOlerTQ4JyMVQngU5ziiLY5Ri1seJX3hFoSSoH0rnp9PuLCUkAgivoC7sUlGdorl9e0GOSMttGfpXRCbvZnJUpLdHmNjrckeAGZJAeorqNK8aSxMFnbP9axNX0LyXLhT+VcxexywNlc8HtXRZM5JJxPcLLxLa3KKS21z3rUXU2RMo6uvtXz1Z6rLEwKucjtmup0jxOdyq8hQ+ueKTiClc9SuJba7O4Dyn9R3qGB4VkVL2OOaPPDMM1zcGrLMBvOM9GHSrBuHAAzvTsRTV0DVz0SG9iEKrEFVQOAowBQ1yrd647TL75tgbqOAa14pCT8zUmQlY2TLhciq91c5Xg1FDMpXG4ZqrcSgHBFJMYye6PlkEncMAVzPiTSo9TspJJIlEyjPmDrW3JIvBIrL1a/dbZ1TaqfxMTyR9K0juRLVHjt0ojlkjz8ysQan0jWJbSVoGOYXGCDyCKoXUol1G4kQ/K0h5pChVw46itWramCOtDLM4MXKYzUuwYGCMntnpWXpV6IgCwBRuvtW6IRcDMYDD2NCZViKNCSPStK2XaPwqBYTEAWGAematxDK0mOKNGzIBGRWsZEypXgY6Vj2ysWAFaqIoVSRyKxkarQu27q7lc9OtUfEkxttJu8SbN8RX654p0ChXds9eea5HUbo63rEdjFkwxNmVumcVKjcblY3rGNY7C3UAAhB/KpduKM7eB0FOX5qdrjQwruOD0NFSKgwaKLAdpewLMVDc4q3bW6rEuBjFVIpCIgDjNXLdtqgnmtLWAlKbeT0qrOWXJJwPSrJk3ZzVO6PykdjTuBk3t4YgxLVyV9q0iytjdnPetzWCUUnJrkr7nkgkdahsZDfeIroxNGmAema4vVriTad7HcxroLyMZJxwehrlNWcm52dQKqnq7ET2L9gqvGrV6j8L9BEhk1WdAdvyxA/qa8w0SF7iSKBD8zsFr6F0aD7Bo9pbKNg2DFOvLlVjKlG7DW5lgtcnr3r5f8AivqLXuveWGyq84r6D+IF59m0dmzzkCvlrVJ21DW5pWyd8hA+lc+GV25s6au3KdD4B0drq5Ryuc9K+mPDtmtpZwxADgV5l8LtKRUjcr90Zr12D92gOM1jiJ80j0MNT9nG5pRABgeK0opVEYwBmsNZfnz046VPBKxbrxWKNmW7k73JqjMvPNXsbhmqtwADVEmez9h2qpPH5ikY60mo39tY5aeRUHvWQvivSnOBcitYpszbS3ZFqOkrMrKw69K818T6HPbTMUUlfpXr9rqNhejEUyMe3NNvNNhu+HTI9a6orQ5qiTPmjUIXRidpVh+FZv2l0JDZyO9e6+I/BSOrPCpP4V5X4j8Oz2Tk7Dj1qrHO4cpU0jxLNZMFch4u4Nd9omv215Gpicc/wGvJJbZsntUcMs1k4eFypHoaVhI96BDYeIlWFbOlX3mHypjhuma8e8OeMm3CK8+ma7iz1NJtrwOD3xnpUtWKud7HEYTuRAU9SeagllLNx0qvbamsturSOF7GlZgRuHCnpRFEMbO5GM1534+11oU+x27fvpB1/ujvXS+KdZi0yzZ3b5sHavrXkJll1G8e6uDlnOT7DsK2px6mNSVtB2nWYgXI6sc5rRx6iprOHONw46CuttPBN/eW/mIhVyMhCv8AWqkzOKZxsL+Uxz930rT0y+nhnR42+QH7h5zUWo6Xc2ErRXULxuDyGGKpRyPE6kdM81m9TRO253GLjUZvMjDGMDp2FXIg8Z2mNsDrxXH6fq93bzboZ2SMc4B4NdfYeIoL6OCG9k2yDjLDHf1qHJmqSNayTBU+taDjch29RVIQN5zbPniU4DA8E+1XFkWGJncYA5qb3KsVp7hbeNnkbagUlifbmsfwykZsGuUjAedy5bHJ5OKoa1qQ1S//ALNtl8yMsDLj0z0/xrpEWOGKOONQqqoAAqrWIF4py9KQYOcdqM4PNSUhzcA0U1yGBxRQI6hZjs6VMlwQoyazi5HIOQahMxVsGtGUbKXX0pk9yCprIWfDUr3GTzSuBX1WdD9+ubucbmOeOwrb1DbIp+lYEoBRiT0qWMyNQYLCxY4xXBzS+Zdsck5NdZ4kmEdqQDncK46CMli1b0o9TCrLod58OrJ7vW4jjIRc/TJ6/lmvZo5GEhViSEOBXAfCizWCymvZBliMA+ldkkvIOepzXNiHc2oR0ON+MV7s09YlJyRk14Dosfm6igPdq9b+LV0ZZpI+yxn+VeWeGR/xMEJ9aVBWgzSWsj6B8BosVoSCB0Fdms/zAA15/wCDpSLYr6V2MEgYe9cc/iPTh8JqGQ9qlt5ju9qrwkYGaY8gQkUIZvC5VU61xvjbxrY6DbnfIr3DdEHaqPizxIdK052X7+OK+dvEmp3GqX5eR2Yse9b0qfM7s5q1Xl0R0mseKb7xFfH522k8KDxXWeGtFshCG1O5AP8AdDV5ro8M7SiGyX94eGfsK6ttIubZQLq92yYyRmuvbY5Eru7PVdIt9BtHV1mAweBurrkvdMkiP2eZdwHrXzNeXdzZMMXKyD1DVf0HxBdJcJ+8J56A0ry6lucT6StvLnjG4gjFc54q8Lx30EmwDJHAxUvg7UTd2q71wxrs1RWj5pc3YvkutT5O8R6BNY3TxumCD3rmp7M5IYFcegr6N+I2gJcxGVV+dec14tqED28hU9PcU731MJ0+V6HHy2oUZXOataTrFxYSgFiUz61a1AKSARyayJoHRuVJB6GiLvowSueueGPEMcjxFzkE969EGy4gDxkYPPFfOvh+6eJvLJ6V6fpPiVrXQ7rfyY42K/XFK2pD0OX8f3327XWtonzFb8N6Fqy7GHJwBgVUgZ55GmkyZJDuYnqSa6nwxpMuqapa2VuPnmbGcZ2jufwrpi+VHJL3mdr8LfDsV9PLqN0nmQ25CRKRwX6kn6V67DAq9FA+lVtA0i20XS4rO1BKICSx6sx6mtRa4py5nc6ox5YmJr/hux1qxeC6jAY/dkH3kPrXini/wTqOglpSv2i0zjzU7fUdq+hX5FBiSSIpKgdW4KsMgimp2E43Pksh4+VOMVNFK8zAyYHQYXivc/Evw00vUmeWxZrKdv4UGUJ+nb8K8g8Q+G9R0C7aK9hYKD8sq8qw9Qa0upGdmjY0XxA2mIY7qNpk/hIP3RWnqeq3WqBYtFljhWRcfNyTxyc1wUc7E7J2yn0/Srmn6k2m3guETJXhYwMj61Dii1O+h6DoOix6RaYzvuJPmkkI5OecfSrc5AHHaqulaxDqNqrBxvA+ZTwc1YlGaY35EG45P+NIZCZOvSklGOaquxppAWpXJBA4zRVYE4opiZ08sTpIdhOD2qKUkjI61Kl1Gw+UqwPeoHxuwjZz6mgpMa5yuCSPpVdl8lcoztk85Oan56HGaSYZiJQ7WPFSyik03z4foeKy9ThEcMkitlRzirktuzHmUIB7dabfBfsTKW5xQgex5prl59qm2AEBagtkVI+aLra9/NjnDYq3ZWr3V3BboCWlYLx6d66U7RscktZHrnhiJbTwra7QVZxkj1rUhlJKDI6VWuMQQQW6/cjQKPyqFZNnPtXBV1R2U9NDzL4kyGTUrpe2wivPPD7bb5PrXd+OnD6hM3Yg/wAq8/04+VfDPrWlP4LFLV3PafCk+FIzXVfbPL5BrzLStXSyj3Ow5FRal478slY1wfpXN7NtnYqySPWIdYUuEZqn+2bzgtnvXgkniq5nkDJIQc13XhfX2uI0WZju96t02hwrqT1Lnj1GvICig8CvNhpRjcGQfPjGfSvdbjTkv7PzEXPGOBXnXiXS3tpflHQ+laUpGWIg73OUGoJocTTRqC+cLx39a5zV9bvdQkaW4laM7PlUZ+bmtzW9Jnllh3ArHtMhz0IqhPB9sWOKO03bRgNXVFrqcU1K1kYtrE1xEztI24H5eetekfC/ww99Ozyg7V5yTVDQvCss8saiHfJnhFH3fc17d4O8MvYQx7htYjkZqKtVJF0KTb1Oh0TSo7OFRH2rfQ7Rio41WJABT94wfpXHGV2d7jY5rxNKrKytXjfiizXziygV6j4tmw7YJrzvU/3obPNbxMJ6qxw2o6S5tzPFzt6iqtnam7iaIj5h0NdcsDtFKg6lSMdjV2101LLRIQIw1853ZHO0VZkonlsYa11HYwIOcGursm8yCSM/ddSDXM64Hj1aTzDlw2SfetzSWyo+lGzM5Iq2iFZyrdBxXuvwj0aOy0s6hMn+k3Q43fwpnge2a8n8M6YmoeIYYJPuFtzD1A7V9D28aQwqsYwqjGBV1ZaWMIR1ubLMMZyMUxZPmPOBWULsqcHkVbimVwD2rmN7l1XBqQcVUjcVN5ny0hkpP51WvLeG7haK4iSWM9VZcg04SZzTS/NUmS0eTeO/h2I4nvtCQ4Xl7bOTj1X/AAry4mWBijFkIOCCMYPpX1Q0grl/FPhHTNeRmaMQXeOJUA5+tapmUo9jwaK8KMpEhhcfxdq0YfF92soiVTKM4LHqad4l8K6jok7CeJnhH3ZUGVIrmjF82QOR0NVa5PM1uek2Gsw3wAzskxypq9s3kYrzO1vp7dNm7AH8QHNdTpPiFREBOwb0IosWmmdMqcds0VztzrU7Qyyx+XHbR9ZHYDJ9AO9FFgbOVj1HU7Mgx3EmB/C3NaVn4zvIHAuY9w9R3r2TUvAmgXqNtj+zyE9Yz/SuI1n4XTLubTbmKcZ4Vvlarcosi0omXB41tpB8wZWq/D4jtZR/rwPrXJ6l4N1eyyZbGZVH8SrkfpWDcadLEcSBkPpyKXs09hqo+p6kmqWzfekDGsvXtWhS2YI2eO1eebbmLhZHA9M0K1zIcSsSv1pKlZjdXoWYCXlaQ9CSa7PwBbtNqstwQCsCgD/eP/1hXHwjaK63wNfeQ11HkDJD/h0q6r90zpr3j0PU3+VCOtUZJCEP0qOe4aTbmo7l8Rt9K4pbHYjznxb89w59zXCTAxzq/Su88RDdcODXGalEdjAdVORWtMV7MuoJr6QJF0AFV7+wWBh5jF5CcBR3q94VuR5cucZFK9zEuptcT4KRjIz2NNXTsVZblWLTLmOMSGMKCMgVasL6a0nUkcCqGq+Jbm5wsKrDDggEjk1BobT3c2CxY56GtXC61M/aLmsfTXwvv49S0tkY5OKqeKtOSS8wV455rnPhpeDStVjhfIjlG36GvQ/ENv5hEg6ZzmuH4ZWPQi+eOpw2oaHJPBGPLDBVwAO4qLT/AAyqupltnx7ccV3FmyiJd+MgYzWrDLGYx8qmnKo4iVPUzdHs7eziU29usR9hyfqa6WziAjDnqazzLH/dAq7BdJ5ZGa5pS5mbRhYkd8E1Rubry889qq3moJGTh+9c7qesLzhs1tBCk1Yp+JbnzXauQmG4Vfv9RErHmqSfNzXUjlmRwW3mZHTg817L8OPAdnd6Nb3+qqWgmUlRnHHrXk8UgiVwRwVIqe08falfaBBo41AwQ2nyYX5SQPU/0rWNuphUckrROe/aE8GWXhzxQl3o8pbT7rHyFt3lt3APpXIaR0H0q3488QNqSxWjz+cVkB3ZzgAf/Xqro3+rH0pTtfQyV7a7nS+B2VfFEGSBgNXsyXI6buvNfPuk3htddhkB2hXwa9igv/OhV1qZq5MGjdmkz3pYL0pxk1lC6496ZJPkcHFRyl8x1VvdBlBJq2LkY4NcSl+YlHJNaFtqIcdeanlGpHRm4GetMa5x3rINyT35pFmLE5PSmkDZpm5y2KeJMiswMSeO1TRS+pqySzMBIm1wGU9QRkGuD8U+BLa8V7jS1WG4PJjH3Wrtmlz3pA4z1pp2E0mfPd/p09lK0VzE0brxgisyWH3I+lfQ2raZaanEY7qJWB745FeVeKvCFzpivPbMstsDwP4gK0TuZOLRwotw7jLM2O2elFaUEQ3jI5oqrk2ufSZGOpFLuGPWouSPmPNNLCsDqLS3DDjccVVvrSxvVKXtnbzA92QZ/OmlwOtUbnUYosjeCelFwsjH1PwDoV0CbdZLRj/cbK/ka5DWPhxe20bS2M0dyq87T8rYr0L7ZhRlsN6DrU0csjjDDdupqo0R7NM8FvLSe0lMdxG0bjswxUdjetZXaSpzg4Yeor3DX9AtdVs2SZAHA+SQDlDXiOt6fLpWpy2s4G9OcjoR2IrRTU0ZShyO6O38P6kt5ESWbGSBmtW7OVkI6YrhvDN0ECRFsEPwK7e5YGBiO4rkmrM6YO6ucHrnN02a5i/TLNkdRXUaoN142fSue1IbJUz3q47AzC0+4NpdkHhW+U0mqO7OcZIaotTTy7hsfWuh0S1jvbVGZQX6Gt3paQJ390yUMd5aRQJAzSjjPpXXeENEc3KbEJIHzEDhRV/RvDbPOEjwit1IHavTdG0qKxtVSJQOOT3J9TWdSvoXTo3ZhvamxltZlGCrhs16sCt/pcLYGSvNcPrkIFqjE4AYV2Ph2eIWEasw+7/SuJtt3PRpxSVjI1KCSzjLgEqOma5yTxPJakrJA2317V03iHxNp1vG0MpVj6CuA8QeKNKurRoYABJit1HmWpLkk9zVTxaspI6VJ/wkZAyG4PvXn/h9DqnnBGwVPBqe/trq3JXdkD0qHTSFz3Vzpb/Xyc7WrAn1d5GOTWBcXFwp5zRbB5TknitI7GUpXNlZmc5J4rXsz8grAiGwjFa9rIQozWiMi/Jgr7mvJ9djltNavArFVZt3B9a9QaWuG8ZwD7Z53Hzpj8apMiZx8GWlz3zXYaOm5UArkbb/AFldt4cUNIlEtzORkX37u6l5wwfrXdeBdcN0r28xyyDrmuM8RQ+Vq86r0JDD8ai0O7fTtRRwcK3BrRrQ5U7SPbC2UzTWbjFU9NuPPtt2cnrUrMQTWdjUZIzdBU9tMVwOc1CRkUq5DjFDGbUMrEc1ajyMGsqzkJ61rwKWUkUgLcbfL0p6iiIcfSpooi4O3oO9A7FWZ9vQVErkvzVyePavNZrkh6AsXC4rF8UziPS5i3PBFXjJzXF/EfUxDpqWqN+9uDtGOw7mhbg9EcBabpJCQMktxRW94D03+0fEVjbkZjD+Y/H8K80VNSfK7E04cyueyM5IxVYy7Xbk8DOaa8w3YyKqztvPluTs6n3obNBbq6LKyQtl+lSJbxuULKGPXLevrUSKoBdFCAdAangdnXJXAHG71qZSZSFW1RZi6qBnrxk1ZhXaRSRnnmnEnPFZtspIJnYI3HFeUfFm2Ky22oKOB8jn+VeqzP8AL061x3jez/tHRLm3x8xGV+oohJxdxTimjy7Rvmv4Mf3gT+dekXYAswR3rznwgjPexo4+dW2mvRtaIitY1PULzWlZ3ZFFaHD3vzXjVg66uHix1rfC+bcsQeKwfEp2XkY/hA/WiD0HI5/WQC8bAfeWtDwbdiG7aBjw3I+tUdU5S34/hOT+NZ9vM1rdxyr/AAnNdSXNGxnzcrufRXhfyQoYgEmus3DYMDFeW+FdVEsUTK3GBXcDUR5IGcmvLnF81j1aTTjcpeMtQENiyqec1x//AAmc8EaxiUqQMcVf8UT+ejDsa42TRjeQO6/eXpWkFbcU5dhus6hcXgZo5vmY9TWdpWhTXU24OzE9Sali0qYuEDn0rr9Ah+xosbgZ9a6oy0MN2bPhHSPskiqi8Hqa6a+0iORWZsZrPttd0+wUKzgye1Y2v+M9wKwEKB371lKMnLQ20ijA8VCGykwOrHAA9aq6WjfMXGMetR2lrcatqsd3egiFOUUnr71tz24iDFRgGrkuUw3ZSJ/eYFX4WwAKz4xl+RVzOAKUWDRKZOOtc34tO+CNu+cVtu3BrLvrb+0GSEEgg54FWiJK5wkPEpPvXYeHJAuDnpVDWPDU2nRGdX3xjlhjkUaI5VWB4pvVmUkTeIJhPqTuPYVQcZGan1BC0xNV8evatlscctz0bwXel7SJSwyVxXThSxNeV+F7/wCy3YjZiFJyPavUrOVZYlZWyMVlI2i7ol8vIpVh3Y7YqVamjFSWkLaoUHPPua1rFgMjPWqkQGMd6mjG1galjsaE8cskRWCbyWIwHC5Iq1YQ/Z7JIt8km0Y3SHLE+pNU45fmWtBW+UVNxor3X3DWPK3zGti45FZN0mDTTBleWQKCWIA7mvINe1A6rrtxODmFCY4vTAruPHOo/YNHlw2JZfkX8a8xtWAVfatYrqYyfQ9a+Dtjm5vL1h8qqIkb36n+lFdL8Obb7H4QtXYANLmQ/wDAjnn8MUVxVZc0mdlKFomK92tywFq5JHU4/SrNubt5Nrw/IOrVdtbRIYU3LHuA/hFTqxHGRiuiTMkVhA07kyDaijpnrVxgqoFU8AdKaAMZFNbPGO9Z3ZRJFnGTUowRxUSHA5xUgIUEjvUtDRFcHaprEvPnyK1pyWqjKg/i/SpehSPO9C0iSLxjd7VItol83JHBJNbPimYcqOCK627hhtdPV8ASu4ZjjnA6CvPNSlk1PVDBAu5mbaMenc0SnzAo2INOtswSTsOOi+5rl/F9uTbJIB8wbJ+hrsNZmSyjFtHgmEDcaxdXCzRdMgDd/WtabsRJHFzqJXkjznYoX8cVl+VvBHcVdiLR6hIH6OTSooju2QjhuRXVe2xlboavhDVGs5fJkPBPyn0rvo9UyoIbgivLCm26IQ44yK2bHUmGFkPIrCok3c6KdSy5Trr64Eo61Z0gqIDnqTXOpceZ0NW4b0wRn0FZ2NlI1NRiihbzUIye1YV5qsikgfKPWor3V1fJLdKg0zR73WpgxVo4Dzz3q4RKirvQqfbri6mWC0jeSZjgBa7Sx8Lppdot9rhMk5GUg7KfetLwzb6d4fZ5nCtOoxn3rK8UeITqVxtQny14HufWtk7GkkorUSKcy3OUAA9B0Fa3kmSLmsbSISVBP3q6uCECEZFZTlcwtc597bZ2xTJBgVp6lhGHasq7cBM57VKArTyKiEn863/A2jySpJe3EZ/e8oD2WmeEvDUuuyfaruMjT0Py548w/wCFeopZR2tqqrtVVGAKUqltEXCnd3Z554gsoALhnHyhPu1iWnhlb+wjntVCOxCqBwGJPArf8bCWFA9tA11ukAMKn7w9DWzfeJtWis7IL4a09LK3CstukzDYV5DZX3qovqZzSvscz4x+F99oHhaLWbnULF5SFZrNCS6qe+e/NeZSrXqF7fDXr6ZXeWKKVQ7W8km4H1KtgcZ7VxviPRlsLhtn3DyK7Iy0sefKnLc5jeYpFdTyDXoHhjVxLCEL8j3rgplA4pLC+k066DKfkJ5qZxuRBnttncBx3rWgUNyK43QtQS5gSSNgQfSuusJww5rFqxujQjTFS4xTYjmpxHu5rO5oOtwN/WtAEbRVO3iwcmrZAxUgRykYrMu60JK53xbqkek6RcXL/eVSFHqegqoq+hLdkeV+P9UbUNfNrHj7Pa8HHdz/AIVnaNZtd31vbKP9a4U/Tv8ApVWCJnZpZTukkYsxPqa774X6ak2tmeWMssEZcHsDmtpe7Fs5170kesoI9N0mC3AC4HAJorOvfPu52IRW7DJwMUV52+p6G2g0dOaXK8gjmmqc8mmtyxxXSZDgey9MUHkAUJkL1prOqEBzjPCjuaAHA5HsKAT0xTlUKhMgwOmPSk8xNw3HikBVuGKg9cU2LYAGl4UetWJnDkqgyD61WvrffbnZwR+prORUWc74x1j9z5NuCzk4GO+ayraFPDumNcXOG1Odchevlqe31rTkt4tOka7uyryqMxp1APrXL6o8uoW73LtkMeBUxRTZhT3TTyS5JYv1NPik89dh6jAP9KhtoXkuZVH8IzTbVimoxRkf6zI/GuiKMmc5rkJgvl/MVDOctHIK6bx9pxt7a0ugDiTIBrl4v3to3GdvFbdCRLh8XUZHGRTnYg5HWo8E+Wx7GibKkj3zQ0noNGzpd0JFxn5h1FbluYpkKNwa4SOd7W43ofqPUV01heR3UQZDtYDkVE6dtTWMjQbT44pDIqhh6Vet/EH2WPYox2qik7pweaVrRJW3heDUKRrGbjsQXuqTXMpWIElvSr+j6RJK4km5bsKk0/Tx5wCx9e9d3oemrFiSbGOwpudi1eT1INL0cou5lxWhPGI1AHatC4vI40wuK5zUdSG4nd07VC1KaSKGtSDd16VL4V0GTxHqaxuCLCD5p3A4P+yKwZpJtT1CGytMtcTvtHsO5r3Dw/YQ6Lo8dnB0UfM3dm7k0TlyoiKuyxsjt4EhhQJHGMKq9AK53xBfPEh2k88Vs3cuFODXH67MzyoijPNYx1eppLQjgPnmMynjPeumNtbzWexpFAx1zXLNE4jXbwBz1qhqd3LDEEErb26DNa2JUrIrWWkvN4uUIQLS33szZ656Afln8aPGEKrcLvGVAI6Vv+DYoo0kmu3y0hySap+LmspbhFRw3zcj2rSM7SsZyprkdjx2VN8jlTxuOKrzRFkOa3NZsxb6o0UKnDHjFNNmhQJn95XammjynFp2KvhTU5LG4aBmIXPFem6dqqlUOfrXkN9byQTcrhl9O9b3hzVWfMcjcjpmocS4yPZLG/UgEkYPvW3auJMYPWvNLG8YYGTiuy0K83lRmsJxN4yudZClWTbfuGkBGAcVHAcxhvQUPIxi2fwjkVFgKc42mvKfizf75rOxQ8ljIwHoOn6/yr1G5kwCScADJrwjxVdtf+Kb2UtlYz5S+wFaQjqRUdkUrcEsAq57Yr2nwrocmlabDIZSrHmRMcsSOnsBXk+gPBFq1q92Mwq4JHqe34ZxXqUPi2Dz/Ilyq5wGzwaVe7VkKhZO7OjRtmTjmiqEGq207YSVM/71FcVmdl0IcBjyaNwCEDqT1qlJcAnNMM/BroMTRBBfOe1IzIvYEjuaoLKfWleT160tRk1xcNJ9KrsxyOTmo3fAwKW3jMjUxF6AbIgxHWleRn+XpjmklOEA7VFeMbayyD878CsZM0Rw/i+cqsoUkhyFBpos3j0qFVQ7cY5pZE/tLU44sHYr5NdbqluqWsEeAMZP6UX5Qtc4LRLEl7rcvzOpP0rndQzBNHKvVORn2616DosYKtN0D5A+lcH4kQxzzJ2Xj881rCVyZKyNbxft1LwtBMnKqFkx7EYNcBpkBZJVHTJFejeE0Go+GpLd+cbkwfQjj9RXG20Ihv5IsfxH8xWkX0MzOktmWHleRSfZ98YbHOMV0l7ajYQO6k1n2kayW7ADvS5h6nPX1v8Auww7cVTgme2l3ISCK6OaHKyKR2xWHdRbQMjkVtSmmrMXKzd0/U47hQr/ACv71vWNwoYA154QUAZc1oWWpyxEBiWFTOl1RpGetmesWFxGrKeB3rWbUwqYzivMLTW8gYbBFXv7YLr1/WufltudCqW2Onv9VOThq5jU9X8vOSSx6Ad6zb7UWI4NdF8LvDJ8Qaq19eKWtYGwqnozf/WrTSKuxpuTsdt8KtAltom1a/TFzMoCA/wL/wDXr0Z9xUnpUttarDGEVQFXioL6QRxsBXI58zNuW2hj6hdbQQccVzs06vOWOCelSavcklgDWNbOPNYM3vWsY9TKT1Nia5RIfmxXM3b/AGm7yvPoKlv7nzHMcZyB1NU3u47FWYjdIRgCtURJlm/untbcL5m3+dc2Lp5btSSTlqS5ke6mMkxPPQUyDCSgjHHNNLqK7L+o2U9xd+bFGWwvOKxtzrO3mAhgcYrd/tRvNURcufl4rO1Cyu/OaWSMtu5JHNawlYwq0+pBdxx3VtggeZ2Nc7MjW0+9Mhl610UfC4IKkdc1T1CJWJYckfrW8WmcklY1/DepC6UKzfMOteleHkG5SK8Lt5pLK4EsXIzkivXfBmrJd2qMrZPp6VE4lQkelRz7IwCeKUyBk4rGEzGpUuAkeGrKxsUPFmojT9HubjqVQ4Geprw+23ys0shy8h3sfc13nxO1HdaRWiHmRhkD0rjLZf3YwMVcEYVHrYGwBUFwZGTCs4x0w1WzCWoaDbWliDPtxdwyb0uJFb2airhibpg0UnFMfMz1N24FPVuKq78nmpVbjrXIdZaVqVm+WoA+KTcTgUASpl6vRHZsVerVBaLt+ZugHP0q3ZAyl5m4UcLUSdhpEojLuFP4/WsrX5ZEyAONuFFbtqgJLH7q965jVbz7ReOF+YKcD+lY7s06EXh6xCSmZhllG4/71aHiCVo7Zjj5jFx9TV2wtGitBkAMy4z6k1S1cJPq8NqevBIHouCaT1dw6GesYtIFibrGgBx64ya8/wDGSqJrl06MyOD6gj/Gu/8AEr/ZrCRycu7Z/OuE15PPsLaVejbo/wARggfqa2pE1C78M33PNATy6ZA9MGsXWLb7N4ilVR8vmZH481pfDhhF4jt0/hYsmPqKZ4sUR+I7kc/JIAPyFakdBJ4i0cZxjOV/QVj6TD/osnHzB8V0rciLjjyy4/MCqOk2pMEpPV5GAH0qGyrGVc23MjgY3cCub1SPDEe9dtqsflzqi/dCZ/GuS1FcMgb05pwdncTMmJAY2VqjCFXCtx2qWUbUb60+UbmtjjkjJrqTJGxDbOuRx0Na/wBmcIGibctY8zhZmI6A4rpdOUT2yOjdRzWc0zWLMeZSQQc5r6B+E9qkOhWqIuFVAxPqx61wfgD4f3vjnWmtYmEFnDhrm5YcIp7D1Y9q+tfC/hjSfDulW9jY26+VEgUPIMs2O5rGUXNcqLVdUndnFFCUwoJJrB1a0vljdzbT7BzkRk17S9tbswKRqjDoVAFKhaNwkgBB4BqY4e3UmWNT6HyZql4sl2yISSDgj0NU5jsh+U/Oa+iPiL4BsdetZbvToY7fWI13I6KAJsc7WHT6HtXzPqlz5LMoPzg4I9DV8lghUU9RlxdLAvJy/pVAu8rF5Dz2qvJNGh3ytl/7tVXuJbltsYwKaKLU10icZzVf7QTksMAVMlosabn5Pcmse8uDNcGKDlQeop2A1LG4Ml3nsvSuy02cbAGAYe9cnpNoUwT1rr9LsXkIYjCim9EKLudHYaPY6jGPOt0y3fpTLz4d2UoJt5pIj6VJBdm0kRR2PaupgvNwUqDyK5ZVJRehuqUJLVHmt38KbpmJt7yPns4qXw34D17RL7cWhltj1AbmvUEkkfnJFSF9v3nP51SxU+pn9Uh0MOO3nQYkjIqKcFhjOK0by67Rjc1RW1mzuJJs+uO1DxDGsMjk9W8HJrE4meeUOBgc4ArFu/BF7ZrmKVJFHavWQqqMVSvyNpxRDESuOWFptHl1hob5JvAU7AA81rQ6bYxJzCHb1bmtLViNpZetYH2w79hY5rZVJSOZ0VAvSRQAYSGIeny0VSM+P4qKNTO6NEEHvTw1ZcV0HHDZqykhJqnGwky+G4qaEZPJ4qnC244rQgjaVljj5JOCah6FouW6m4yo4jA+ZvarSSCebyLcHyUGC1QXRWGPyIeP7x9TWlZQx2ln5j4AHJz1JrCbNImd4hv4tNsvIDfvZBwoPOB3/GsDQ0NxdR7xyT5hHqazdckfVNRM0ZZgThxnoB0FdR4Zt9sjMV4A5J7f5xU7Ia1ZsoCxRWIG0bz7dhXLaXMb3xXfSLny4IvLz7s3+ArbvLz7Npl5ekcPkID/AHRwKw/A0ZW21K8l6ySZ/If/AFzUx2uPqZPj66AkEC9FI6Vztltu9DvrfrJAyXKe46MKk8T3f2q/ml/hJJFZnhq5EephW+5MjRt9D0/WuqCsjKTuXPAf/IyWXr9oX9DVj4hIF8U3pHTzAf0qv4KRrfxXaRy/wzsT+AJpfGspm8R3Z55nx+FV1F0NCGMtaxt3W2b+dJpKbTApwSzkj8as2xAtpE7rFtP0JqC1byb3dj5YIncfUAgVFirmRrEm+/nCj93FhBjv6muY1IAzOAfujFdFMu2Jd3VvmauYmcyzSk/xE1ViWZ12v7s88hsmmh8vEAOQmPpU1zF5k3tkZFL9jZ3IQld1bpqwWM+dsttXnnJr1TwFoH9teCryS0jzfWMw3f7SMK4S30CZiGU5r134EGXS/E72FxgW2oRGI56bxyv9aU5LZDine5678AbZbPwNOxXbcSXsgl9crgAGvUwA0XFeT6fq1r4X8aDSVdjbayRJGFUlVmyVOD745r1Ozl4MT4DDkCoi7GFRN6slhR/LV2bIPanSYOeOadgAHL4TsMVE8kS5+YnjsKbbMkRzlgqEH5s18ofEnwJr/hya7vLu0D2DSM63UBLqoLEjd3U896+sYT53JBAz3qvriW0+my2V2oliuEMbIehU8VdroqnNwZ8DspMp3nnPrWjBPFAnBG6sLW5GsNXvbIklrad4SfXaxH9KpJcyysAgJJqPZs7VJM39Qvyy7VPXjil0q2UYLLkk0zR9GmupVaY4Hbmu603Q41AUjOKfwrUaTlsRaPBGrgvy3oBXW2lvM0e4JsQdz2qxo2lQxEMFq/fkSKLSDABOZD6D0rnnUOiFOy1M3Tbf7TcFyMop4Y966eBAgGaoQBIIlVMACklvQOARn61zSdzaKsjWe4VOhqs7tM2BmqMLNM2T0rWhULioehQkFuQcsAatjCjilBGOtRSS7Qaa1DYZPMFzmsW+u8ZHFTX1zgnBrmtQuiN3J6VrCJnNkGqXQO7BrlbuYrLuBxV68uC1Yt4+Qa6Iqxy1HdGglwXTINFZdpPxj3oraxyMp2WtPERk1vWespIVywBrkL/TriymMdzGynsccGpNPVo5Az8itGrmadnqeo6Y5chhyTwK6GNxaQ/KR5rcZrz7QtSbe8qnCJ8iAnqe5rbsdVa7ujySMcCsJo2izqtPhM8u9vz96h8X6j9ntGghxwv5sa0tOPlWPmNjOOnqa43V1lvNQVCcLnLEngCuXdm5H4dszHvkJLu43Me2TXY2sJj00onEkpC8deetZmnRorLDCMIxAPvXQySRWkLzuQEgUtntntUydylojkPG9+i+VYxtgIArAen+cVYUf2b4USMcSzqWPrzXJ2TSa94hDYyjydf9kcn+Qrp/FV0EhXgBMHb7AVolayIvdXPNdWk/elQcnGKgtY/KZJPRgfypUzcTPJ1UsSKtBVYjkcelbXM0jb0S1abx7b7OFKiQfitY+p51DxW8YOVkumb8Ax/oK6vwehkv0uz1gtZFY/Tp/OuZ0eLdNLfFgNsTAf7zH+lK+o2tDVt5QdSlQHIOMj2HSqTSkTXSdeVj+uTz/SoNDl+0S3tx/C0wVT/s4qJJw9zeSfwqu80K4FfVp8RXDDog8sfXOK51F5LdquazcGO2jHXzWLtULR7IlA6Nx+HWrsIrlP3nHrWpY244LDJqnAhkmyBxW5brgAYovYuCuzUsI1XHFd58N7CW71+O5hSFhYg3Dea20EL1A964S3DBeleh/C61t55tRk1G+W2t1hxtI++3b6Vjf3jaXuxbPRPA+gR3Xi/UNfudOktOM2ySMSpLnJdQfbjt1JrubqGeS5Q25AIGTmvNvB3jedvFklneeadPVfs6zy4ARl+6P6Zr1UsfNSRDlcc471rFHFUTVip9rlhGyY7W9DVmLfIu6UgKafLJbTJ87RnH97GRWZqer6ZYIfOnV27IpyTV9dTIk1XW7TTodu8STt9yJerVyt/ry20bXus3SQbmAVOuB2AHrWVqk+o6hfJeWdrDFaopG5zjb7mvPor4eK9fls/t9qYrRnAnk+UEDrz356VpEpRPCfF1jKvi/V0ZzMWunfzMY3bjnP60/TrHYQFGTXafEK1Q+IlnE8c0k8KtLsXbtccEfoOaTQ7BCNzqKcp2R0Qi3oN0K2lDDI/OuxtNsPL1WhjSEDaoFaMFt5mGbkHtXFUqHZTptF2C5kkTbENo7mpAREnA56mhQFUKBgCqeozsE2RDc7cACudu50LREF9qRTCryxPCjqataTaTXDCSb8vSm6FoTvKbi9HJ+6vpXWwwpEoCjipb6Ak92V4bYIOlWVBBxio3lIkAA4PX2pGlB5zS3Akd9owDVC5uMA5NFxNgVj3tx15q4xIkyG/uc5wa52+mJJ5q1dz8nmsW9mBJNdEUYykU7qT3rJupeD71Zu5RzWRcy5NbROeTJbeX5iM0VUtWJkb0ordHLN2Z6nf28V1EUmRWU+o5Fcre+H2gO+1JdM/dPXFdZI9Q7sjA5NYRlY0kkzkxCIdKbcSjH7wHuef5Vo+GZ/IeSTYGG4KoPPatHUrCO609wRsfd94VFo+nPC1shb5dxZmxRKWhKTudreXzRaZFnAJGfzrARjcBpCeAec03U7l55EjQEoOOP51LbICgjz8vVjXNY6kbOkNiPzQOCNqH1rA+IOseVbfYkkPzYMmOv0rSutVisbQyKAFUbUGetcbZW8msakJJAGdn3ZNJR6g3fQ6LwlaCw0xruUbZWXCjvzWN4z1EbPKz/CFHNa+valDbstvGw2xjGB3NefeJTO12zyZ4UYNapdSG+hLp2C0kajG1e9WPL8uED+InioNGUxGOaY8Mu0r61caBjKGc4VPmpNgjpvCe+Ow1VOjNasf0rlYtyeGHdOGb5f5V1mgzI80irwJ4XjXHclT/AFrGs7UzaMYsY2symhMHqZmgk2+ioCMZcnPtiqm77PYs0n3ZmJbP90H+prSW2dbDyl5KyZx7EVk6rG80DxhTtQhfyrVakGLqWZvKb1GcfWrTgmBF/iAAqKeI71XOcDGa19MtDKoLA5NNMaVyPT7VgAcdfatiC0fIO0mtOxsBGozj1ras7MvltvHrisZzOmEDKtbMBBn1r0RIrjQ/ACrJbW4XUn3RXGf3ikcY4o8H+B5Ncd5bi4EFpGw3FR8zew/xrc+I+jWlhbq8ME4tVREt2jbKrLuAIbPbbzx1NEVf3hVpLSBydlaxQabFbp8ygfMT1JPJNV4tV8Q6bq0D2Gp3bWaMC1qZPlYf3a0LcYjFRxqHm9651Nptm7pqaSZsXfjC2kfzLnw7fPcY52zBlP5msHVPiLeWrE2PhpVPZp5AcfgK1xCGXJ61j6na7kI28ZrWNXUxlhorY4/WPHHibXA9vfXCwWrcGC3GxT9T1Nc9YM1hqkRAHkuwLLjgV02q2SRkkDBrmr5sD3B4rphUMnT5TrPiSdPv7jT9Q0qwktoDH5DOy4ErDncewbk8fSs7SiI4hk8YrT1e61S9+HOnvM1smmwyBYY1IDk85fb1P1rA0pjM+3nHpVT1QUjoLWTz58dEFbqsqIBXOKBF92tPTjJfN5cfbqa4qkTspsub5J5fLgBJ9fStzTdJWMiSb55D3qbTLFLaMBRz1JPc1oqTzWDZtYTYFGFGKa1Lu4yetQvJjvSEMkbH0qrK429OlSSSqeM1m3U3UA1cY3JkQ3dxjvWHeXHWp7ufNYl7OMkZreMTGUiK7mzWNdTdfpUl1Px1zWPcT9ea3jE55SGXU3vWZPJk0+4lPrVKR8nrW0UYtluycbjRUMPAorWxzuWp6vK3WmwHBBPc0rruoCkYwCa40zexbG1oWBJxmo5LqKOMAEhgMACqdzKyRkiqVveQbwZ2yM84qZMuKJrjUAAyRDDnuKninYWPyn5twBNa1jD4euwpMyiQ9c8VHc2NvZufIkWWF+CAc4rJvU0scr4jvHa4ihXlIwCR6mt7R1FnZfKCLqSPzTnqi9s/Wn3eircOkyOu4EZJ6Mvv71asWh/4SKeK6wEm/dc9hjiquLlOYsIJL28lEw3Puzk+lXPE+lkQRylCU27SQOhFdPNojWFzvUEPGfvDoy10lhZ219ZsrKrxuMOuKOewcp4dHDIQ2DyORj0rWuhixjJxvK8j2ra8T6GNDviyAtA/MZ/pXI/a2mYux4bgj0q0rq5Gxp6Ze/ZTBKDzDIGGfr0rZmi+w6jdLkNbXEnmwsOmDzj8K4uSXFndYOeAR7etdToN7FqmkRwzHEgIVWP8D9s+xpNDTJ7q3dH860IdM/MPT60n9mWl/wArmKdvvFehqpI81pfBJi9vNyobGVYVrW5lZVaSGF2PVlO3+VK7Q1qTaL8KW1m7A/tWK3jXGfkLMRXq+j/CzwzpsMf2iW5unQclpNoJ+grk/D0xQbZsp/daPLc/0rqop7hABHI8hzkbjwacavcTi+hsS6foGmL/AKBpUDSdgV3fzqnqWnhLQ6pq0EUVvHylsgCgntmsybVNRs5t0wiVc8FME1ka3qVzqaBLqeXYGHyuePyoc09hpS6noXhExSafHFbMpDN5spXpuPb8BWb8XblE0fTrVVGWuNwGOwB/xq94RRdP0qGKFMHGWz1ya474m3hn1y1gJz5UJcj0LH/61abUyIx5qhhowWI5qKybdMcUinETE+lJped5JxjNcLPSRuAZUVUuyoQ5FWN+FAFUL1iQeKcQkczrahs4ri79VLgMDtJ5x1x3rtdT5VvWuK1fKK7DqK6oHNNFW/u1L/Z7N5BbDkB+tbnhyP5GfuOlcdbMWfce9dVoNyERlH3uoroktDKnozYnJMgUdSa7Hw/YLbW4J++wyaw/D2ntKfPueWPIB7V2drGF6dK4Ksr7HbBdS4g+UYpc88daZnjg0o9awNSGUnkmqkzcZ7VbkOc1RnPWqSJKc0uM1l3kvvV656Gse7OBxW0UQ2Zt5LtB5rnr+Y7q09Qk5NYt1IK3ijmmUbiVuazJ5c55q1cycmsyZsk1tEwZDK/aokG56cRzUkScdK0S1MZMepwKKdiitTA9OaQjg0+GaRnCq2M9KsTWqzwxshwzDIrMiYw3yxSdzt/GvObsdqVy5e25kt2/hlPVfUVx1/bfZmJHGa7fxcJbeKzmhBG4FWYdj71ymonzbdpGxvA+YDtUrUp6GTbyzZLI2FXk1Z0/WpJGZJCQM8VUuGEOlls8twDVXRl81mPUDiq5eomz0LQ9ZCEQz8qeAT0rp1srTVI8Efv1HBBwceo968t83yZ4Y26Pxn0robLU5tOkQyMWHTd6UuXqhqVtz0/TJPttr9iuXzcwjEbt1ce9ZsxlsHa4sCd0bbZYTWfbalBrEasswgvYzlHBxk+9SaxNcXKpcxjZfwjbJH/DMtSo6lN6Dtbv7fXNLdCMOByp6o1eNXDSWt/JCwwc5rtr6+3yC4iGyQDlf7w9D71yniKMSyRXUYG1hzjsfStNjJ6lR22K+D94YNL4fvmg1DMR+U5DxnowqrM/ygVJo1sQ0kh78Ci+g0ejaVfR3qIksazFeQH+8Px7104ske2Esdq5KjPtXIeFtMa5ljXJy7AV9AaXocYskTuFAPvUqLkU3ynmdpNqDKF+zbIexT+tbNtNc4AjAJHYt0PrXRXfhJGlZ4LiWIH+FTUVroCWT7md3OerUOmwU0M0TTBJKJb0edN2B+6PwqjPZNqvi1IYwv2e15cj+IjtXT3t3DpulyThRlV+Udy3YCs3wzavbwtcOMXEx3Nn35qFB3sLmurnQYROrhSK8q8UXa3fiq+kU5VSsYP+6K9PugBbvIeSoLH0xjNeMeb9ou5J+hlcv9Mmt6vuwsPDrmlcvzMFgI9afp/GKrXLfKBVuyGQMVxM70aROMVVu9pFWmPy81QvGHanEGYOqYGTXJ3aLJOA65TPzD1Heusvwz5GKzY7DczOQcCuiMrGUo3KfiLwR5Nr/anh9zcWLLvaEnMkXHP1FZngzT5L6+8zBMSEfnXTrqs+l25WInbn5fx7V0uhWkUcatGijf8AO20YyTW1SolExowblqXtOtdiDitOOPbUtuo2AYqRkOK85u+p32sQEcGms2DUxXkZNVpgAfYUwIZGGTzzVG4fGanYEK2593PB9Kzblwuec1cUZtlS6lIzmsS6l5NXbyfcDWHcy8mtkjJspXjZzk1j3JzmtG5fKmsuY5BrWJjJmbcdfwqhIKvTnrVVhxWyMGVmWpkXCio8ZIFWtuFArSJlMiop+KKsxsevaFCZbQhjlon7+lQ6xaRi9jYAbtwb8qKK86W53LYm8SuJtPlUHKkAj2NcVcBYrZgeS3FFFOJLMi/t91okXUCtLw5pyJbMxABOW59KKKBGdft51zmMcIev0ro9ST/QST1Cq9FFAGAt5Jb3KMGKgc5BrpovErpaj7US0eRtcdR9faiiquBBeBZ8zRNuVsMcfzrIu4lktLiLGMHcoooqWPoc+5DSjPTNb+nxKApPf7ooopWuCPXfh9pheaCRlwifN+Nez2YKotFFdFOK5TGoy5JbLIpI61l6hEqITIwCgdTRRVvYzjJt2POri+Gra6sMTh7eGTCgHgkd67uy8iN0V3U7uDjnFFFZQiua5tU0VkHidRZ+G9VmBxi2cg/UY/rXhtnwV9qKKjFdDowhduiAtX9MPyZ96KK42dy3L7n5cVQkQs5z3oooTGyE26g8gGmmJccDFFFVcRlalYCaJh3I49jVzwhqDGNrWU/vYjj6iiiqlqiVoztbd/lxVjdketFFYGxE5FVJmBbBooqoiZRmwinFYl7KMHnFFFbRMZHO3k+CcGsmeY5PNFFbxRhIoSSZBFUZmooq0Zszpm61XY0UVojJkKfNKB+dXOKKK0RjIaQCaKKKog//2Q==";
+
+/* ================= Storage =================
+   В Telegram — облачное хранилище (данные видны на всех твоих устройствах).
+   Вне Telegram — память браузера. */
+var memory = {};
+var store = {
+  getMany: function(keys){
+    return new Promise(function(resolve){
+      if(!keys.length) return resolve({});
+      if(useCloud){
+        try { TG.CloudStorage.getItems(keys, function(err, vals){ resolve(err ? {} : (vals||{})); }); }
+        catch(e){ resolve({}); }
+        return;
+      }
+      var out = {};
+      keys.forEach(function(k){
+        try { out[k] = localStorage.getItem("mr_"+k) || ""; } catch(e){ out[k] = memory[k] || ""; }
+      });
+      resolve(out);
+    });
+  },
+  set: function(key, val){
+    if(useCloud){ try{ TG.CloudStorage.setItem(key, val, function(){}); }catch(e){} return; }
+    try { localStorage.setItem("mr_"+key, val); } catch(e){ memory[key] = val; }
+  }
+};
+
+/* ================= Dates ================= */
+var MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+var WD_FULL = ["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье"];
+var WD = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+function pad(n){ return (n<10?"0":"")+n; }
+function dkey(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function fromKey(k){ var p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+function addDays(d,n){ var x=new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate()+n); return x; }
+function isoDow(d){ return (d.getDay()+6)%7+1; }
+function weekStart(d){ return addDays(d, -(isoDow(d)-1)); }
+function weekKeys(offset){ var s=addDays(weekStart(new Date()), (offset||0)*7); var a=[]; for(var i=0;i<7;i++) a.push(dkey(addDays(s,i))); return a; }
+function human(k){ var d=fromKey(k); return WD_FULL[isoDow(d)-1]+", "+d.getDate()+" "+MONTHS[d.getMonth()]; }
+function shortDate(k){ var d=fromKey(k); return d.getDate()+" "+MONTHS[d.getMonth()]; }
+function dayNumber(k){ var d=fromKey(k); return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function plural(n,a,b,c){ var m=n%10, h=n%100; if(m===1&&h!==11) return a; if(m>=2&&m<=4&&(h<12||h>14)) return b; return c; }
+
+var TODAY = dkey(new Date());
+var TOMORROW = dkey(addDays(new Date(),1));
+
+/* ================= State ================= */
+var DATA = null, TASKS = [], REC = [], DAYS = {}, JOY = [], THREAD = {n:0,last:""};
+var ui = { tab:"day", moreOpen:false, weekOffset:0, sel:TODAY };
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function uid(p){ return p + Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+function sphere(id){ for(var i=0;i<DATA.spheres.length;i++) if(DATA.spheres[i].id===id) return DATA.spheres[i]; return {id:id,name:"",icon:"•",color:"#A68CA8"}; }
+function stateById(id){ for(var i=0;i<DATA.states.length;i++) if(DATA.states[i].id===id) return DATA.states[i]; return null; }
+function tint(hex){ return hex + "2E"; }
+function ph(key, fallback){ return (DATA.phrases && DATA.phrases[key]) || fallback; }
+function pickDaily(arr, k, salt){ if(!arr || !arr.length) return null; return arr[(dayNumber(k) + (salt||0)) % arr.length]; }
+
+function day(k){ if(!DAYS[k]) DAYS[k] = {}; if(!DAYS[k].done) DAYS[k].done = {}; return DAYS[k]; }
+function dayKeyName(k){ return "d_"+k.replace(/-/g,"_"); }
+function saveDay(k){ store.set(dayKeyName(k), JSON.stringify(DAYS[k]||{})); }
+function saveTasks(){ store.set("tasks", JSON.stringify(TASKS)); }
+function saveRec(){ store.set("rec", JSON.stringify(REC)); }
+function saveJoy(){
+  /* облако Telegram хранит до 4096 символов на ключ — держим запас */
+  while(JSON.stringify(JOY).length > 3800 && JOY.length > 1) JOY.pop();
+  store.set("joy", JSON.stringify(JOY));
+}
+function saveThread(){ store.set("thread", JSON.stringify(THREAD)); }
+function loadDays(keys){
+  var need = keys.filter(function(k){ return !(k in DAYS); });
+  return store.getMany(need.map(dayKeyName)).then(function(vals){
+    need.forEach(function(k){
+      var raw = vals[dayKeyName(k)];
+      try { DAYS[k] = raw ? JSON.parse(raw) : {}; } catch(e){ DAYS[k] = {}; }
+    });
+  });
+}
+
+function recFor(k){ var w=isoDow(fromKey(k)); return REC.filter(function(r){ return r.days.indexOf(w)>-1; }); }
+function tasksFor(k){ return TASKS.filter(function(t){ return t.date===k; }); }
+function overdue(){ return TASKS.filter(function(t){ return t.date<TODAY && !t.doneOn; }); }
+function taskById(id){ for(var i=0;i<TASKS.length;i++) if(TASKS[i].id===id) return TASKS[i]; return null; }
+function recDone(r,k){ return !!(DAYS[k] && DAYS[k].done && DAYS[k].done[r.id]); }
+
+/* Нить ритма: +1 за каждый день, когда ты пришла к себе. Никогда не обнуляется. */
+function markThread(){
+  if(THREAD.last === TODAY) return;
+  THREAD.n = (THREAD.n||0) + 1; THREAD.last = TODAY; saveThread();
+  var ms = DATA.milestones || [];
+  if(ms.indexOf(THREAD.n) > -1){
+    setTimeout(function(){
+      burst(window.innerWidth/2, window.innerHeight*0.35, 28);
+      toast(ph("milestone","{n} дней в ритме").replace("{n}", THREAD.n), 3600);
+      haptic("success");
+    }, 700);
+  }
+}
+
+/* ================= Theme by state ================= */
+var DEF_BG = "#EFE7EE", DEF_DEEP = "#E4D7E4";
+function applyTheme(){
+  var st = stateById(DAYS[TODAY] && DAYS[TODAY].st);
+  var bg = (st && st.bg) || DEF_BG, deep = (st && st.bgDeep) || DEF_DEEP;
+  var root = document.documentElement.style;
+  root.setProperty("--bg", bg); root.setProperty("--bg-deep", deep);
+  if(TG){ try { TG.setHeaderColor(bg); TG.setBackgroundColor(bg); } catch(e){} }
+}
+
+/* ================= Celebration ================= */
+var PETALS = ["#F3B6A1","#E4927B","#A68CA8","#F7D4C8","#D98FA6","#FFFFFF"];
+function burst(x, y, count){
+  if(REDUCED || !document.body.animate) return;
+  for(var i=0;i<count;i++){
+    var el = document.createElement("i");
+    var size = 8 + Math.random()*9;
+    el.className = "petal";
+    el.style.width = size+"px"; el.style.height = size+"px";
+    el.style.left = (x - size/2)+"px"; el.style.top = (y - size/2)+"px";
+    el.style.background = PETALS[i % PETALS.length];
+    document.body.appendChild(el);
+    var ang = Math.random()*Math.PI*2, dist = 70 + Math.random()*120;
+    var dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist - 40, rot = (Math.random()*540-270);
+    var anim = el.animate([
+      {transform:"translate(0,0) rotate(0deg) scale(.4)", opacity:0},
+      {transform:"translate("+(dx*.35)+"px,"+(dy*.35)+"px) rotate("+(rot*.3)+"deg) scale(1)", opacity:1, offset:.2},
+      {transform:"translate("+dx+"px,"+(dy+90)+"px) rotate("+rot+"deg) scale(.7)", opacity:0}
+    ], {duration: 1100 + Math.random()*700, easing:"cubic-bezier(.2,.7,.3,1)"});
+    anim.onfinish = (function(e){ return function(){ e.remove(); }; })(el);
+  }
+}
+function centerOf(el){ if(!el) return [window.innerWidth/2, window.innerHeight/2]; var r = el.getBoundingClientRect(); return [r.left + r.width/2, r.top + r.height/2]; }
+
+function toggleTask(t, srcEl){
+  var d0 = DAYS[TODAY] || {};
+  var isFocus = d0.f === t.id;
+  var k = t.doneOn || (t.date<TODAY ? TODAY : t.date);
+  if(t.doneOn){ delete day(t.doneOn).done[t.id]; saveDay(t.doneOn); t.doneOn = null; saveTasks(); render(); return; }
+  t.doneOn = k; day(k).done[t.id] = t.sphere; saveDay(k); saveTasks();
+  var pt = centerOf(srcEl);
+  if(isFocus){
+    haptic("success");
+    render();
+    var card = document.querySelector(".focus");
+    if(card){ card.classList.add("glow"); pt = centerOf(card); }
+    burst(pt[0], pt[1], 26);
+    var list = ph("celebrate", ["Главное сделано."]);
+    toast(pickDaily(list, TODAY, Math.floor(Math.random()*list.length)), 3000);
+  } else {
+    haptic(); render();
+    burst(pt[0], pt[1], 7);
+  }
+}
+function toggleRec(r, k, srcEl){
+  var d = day(k);
+  if(d.done[r.id]){ delete d.done[r.id]; saveDay(k); render(); return; }
+  d.done[r.id] = r.sphere; saveDay(k); haptic();
+  var pt = centerOf(srcEl);
+  render();
+  var all = recFor(k), left = all.filter(function(x){ return !recDone(x,k); }).length;
+  if(k===TODAY && all.length > 1 && left===0){
+    burst(pt[0], pt[1], 18); toast(ph("allRhythms","Ритм дня собран ✦")); haptic("success");
+  } else burst(pt[0], pt[1], 6);
+}
+
+/* ================= Boot ================= */
+var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function boot(){
+  document.getElementById("app").innerHTML = '<div class="loading">Настраиваю твой ритм…</div>';
+  fetch("data.json?v=" + Date.now(), {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error("status " + r.status); return r.json(); })
+    .then(function(json){ DATA = json; return init(); })
+    .catch(function(){
+      /* В Telegram без data.json показываем заглушку.
+         При открытии файла на компьютере или в предпросмотре берём встроенную копию данных. */
+      var fb = null;
+      try { fb = JSON.parse(document.getElementById("fallback-data").textContent); } catch(e){}
+      if(inTelegram() || !fb){ showStub(); return; }
+      DATA = fb;
+      init().then(function(){ toast("Открыто без data.json: показаны встроенные данные"); });
+    });
+}
+
+function showStub(){
+  document.getElementById("dock").hidden = true;
+  document.getElementById("app").innerHTML =
+    '<div class="stub"><div class="moon">🌙</div><h2>Данные не загрузились</h2>' +
+    '<p>Проверь, что файл data.json лежит в той же папке, что и index.html, и есть интернет.</p>' +
+    '<button class="btn" id="retry">Загрузить снова</button></div>';
+  document.getElementById("retry").onclick = boot;
+}
+
+function init(){
+  return store.getMany(["tasks","rec","joy","thread"]).then(function(v){
+    var fresh = !v.tasks;
+    try { TASKS = v.tasks ? JSON.parse(v.tasks) : null; } catch(e){ TASKS = null; }
+    try { REC = v.rec ? JSON.parse(v.rec) : null; } catch(e){ REC = null; }
+    try { JOY = v.joy ? JSON.parse(v.joy) : []; } catch(e){ JOY = []; }
+    try { THREAD = v.thread ? JSON.parse(v.thread) : {n:0,last:""}; } catch(e){ THREAD = {n:0,last:""}; }
+    if(!TASKS){
+      TASKS = (DATA.tasks||[]).map(function(t){
+        return {id:t.id, title:t.title, sphere:t.sphere, date:dkey(addDays(new Date(), t.dayOffset||0)), imp:!!t.important, doneOn:null};
+      });
+      saveTasks();
+    }
+    if(!REC){ REC = (DATA.recurring||[]).map(function(r){ return {id:r.id,title:r.title,sphere:r.sphere,days:r.days.slice()}; }); saveRec(); }
+    var edge = dkey(addDays(new Date(), -14)), before = TASKS.length;
+    TASKS = TASKS.filter(function(t){ return !(t.doneOn && t.doneOn < edge); });
+    if(TASKS.length !== before) saveTasks();
+
+    return loadDays(weekKeys(0).concat(weekKeys(-1), [TODAY])).then(function(){
+      if(fresh && DATA.app && DATA.app.demo) seedDemo();
+      document.getElementById("dock").hidden = false;
+      render();
+    });
+  });
+}
+
+/* Демо-история прошедших дней недели, чтобы прототип выглядел живым */
+function seedDemo(){
+  var keys = weekKeys(0), states = DATA.states.map(function(s){ return s.id; });
+  var notes = ["нашла время на себя","не бросила тренировку, хотя очень хотелось","записала подкаст на одном дыхании","просто была в моменте с близкими","закончила то, что давно откладывала","позволила себе отдохнуть без чувства вины"];
+  var seeded = 0;
+  keys.forEach(function(k, i){
+    if(k >= TODAY) return;
+    var d = day(k);
+    if(d.m) return;
+    d.m = 1; d.e = 1; d.pr = i % 2 ? 1 : 0;
+    d.st = states[i % states.length];
+    d.est = states[(i+2) % states.length];
+    recFor(k).forEach(function(r, j){ if((i + j) % 4 !== 3) d.done[r.id] = r.sphere; });
+    d.done["demo"+i] = i % 2 ? "projects" : "content";
+    d.note = notes[i % notes.length];
+    JOY.unshift({d:k, t:d.note, s:d.est});
+    saveDay(k); seeded++;
+  });
+  if(seeded){ THREAD = {n:seeded + 12, last:dkey(addDays(new Date(),-1))}; saveThread(); saveJoy(); }
+}
+
+/* ================= Render ================= */
+function render(){
+  applyTheme();
+  document.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("active", b.dataset.tab===ui.tab); });
+  if(ui.tab==="day") renderDay();
+  else if(ui.tab==="week") renderWeek();
+  else renderRhythm();
+}
+
+function greeting(){
+  var h = new Date().getHours();
+  if(h>=5 && h<12) return "Доброе утро";
+  if(h>=12 && h<18) return "Добрый день";
+  if(h>=18 && h<23) return "Добрый вечер";
+  return "Доброй ночи";
+}
+
+function taskCard(t){
+  var s = sphere(t.sphere);
+  return '<div class="card'+(t.doneOn?' done':'')+'">' +
+    '<div class="sph" style="background:'+tint(s.color)+'">'+s.icon+'</div>' +
+    '<div class="txt"><div class="t">'+esc(t.title)+'</div><div class="s">'+esc(s.name)+'</div></div>' +
+    '<button class="check" data-task="'+t.id+'" aria-label="Отметить">'+CHECK+'</button></div>';
+}
+function taskRow(t, extra){
+  var s = sphere(t.sphere);
+  var sub = esc(s.name) + (t.date<TODAY && !t.doneOn ? ', с '+shortDate(t.date) : '');
+  return '<div class="row'+(t.doneOn?' done':'')+'"><span class="dot" style="background:'+s.color+'"></span>' +
+    '<div class="txt"><div class="t">'+esc(t.title)+'</div><div class="s">'+sub+'</div></div>' + (extra||'') +
+    '<button class="check'+(t.doneOn?' on':'')+'" data-task="'+t.id+'" aria-label="Отметить">'+CHECK+'</button></div>';
+}
+function recChip(r, k, disabled){
+  var s = sphere(r.sphere), on = recDone(r,k);
+  return '<button class="chip'+(on?' on':'')+'" data-rec="'+r.id+'" data-day="'+k+'"'+(disabled?' disabled':'')+'>' +
+    '<span class="ic">'+(on?'✓':s.icon)+'</span>'+esc(r.title)+'</button>';
+}
+
+function renderDay(){
+  var d = day(TODAY);
+  var st = stateById(d.st);
+  var rec = recFor(TODAY);
+  var over = overdue();
+  var todays = tasksFor(TODAY);
+  var focus = d.f ? taskById(d.f) : null;
+  var impIds = d.m ? (d.imp||[]) : todays.filter(function(t){ return t.imp; }).map(function(t){ return t.id; });
+  var imp = impIds.map(taskById).filter(function(t){ return t && (!focus || t.id!==focus.id); }).slice(0,2);
+  var shown = {}; if(focus) shown[focus.id]=1; imp.forEach(function(t){ shown[t.id]=1; });
+  var others = over.concat(todays).filter(function(t){ return !shown[t.id]; });
+
+  var all = rec.length + (focus?1:0) + imp.length + others.length;
+  var done = rec.filter(function(r){ return recDone(r,TODAY); }).length +
+    [focus].concat(imp, others).filter(function(t){ return t && t.doneOn; }).length;
+  var ratio = all ? done/all : 0;
+  var phrase = ratio>=.75 ? ph("progressHigh","") : ratio>=.35 ? ph("progressMid","") : ph("progressLow","");
+  var C = 2*Math.PI*26;
+  var eveningFrom = (DATA.app && DATA.app.eveningFrom) || 19;
+  var isEvening = new Date().getHours() >= eveningFrom;
+  var threadN = (THREAD.n||0);
+
+  var h = '';
+  h += '<section class="hero"><div class="portrait"><div class="orbit"><i class="o1"></i><i class="o2"></i><i class="o3"></i><i class="spark">✦</i></div>' +
+       '<img src="'+PHOTO+'" alt="Татьяна">' + (st ? '<div class="state-badge" title="'+esc(st.name)+'">'+st.icon+'</div>' : '') + '</div>' +
+       '<h1 class="greet">'+greeting()+',<br>'+esc(DATA.app.ownerName||"")+'</h1>' +
+       '<p class="date">'+human(TODAY)+'</p>' +
+       (threadN ? '<p class="thread-line">'+threadN+' '+plural(threadN,"день","дня","дней")+' в ритме</p><br>' : '') +
+       (st ? '<button class="state-chip" id="chState">Сегодня я выбираю <b>'+st.icon+' '+esc(st.name)+'</b></button>' : '') +
+       '</section>';
+
+  if(!d.m){
+    h += '<section class="invite"><h3>'+esc(ph("morning","Каким ты хочешь прожить этот день?"))+'</h3>' +
+         '<p>Три коротких шага: состояние, главный фокус и два важных дела.</p>' +
+         '<button class="btn plum" id="startDay">Начать день</button></section>';
+  } else {
+    if(st){
+      var phrase1 = pickDaily(st.phrases, TODAY, 0);
+      var pr = pickDaily(st.practices, TODAY, 1);
+      if(phrase1 || pr){
+        h += '<section class="mood">' + (phrase1 ? '<q>'+esc(phrase1)+'</q>' : '') +
+             (pr ? '<button class="mood-act'+(d.pr?' done':'')+'" id="practice"><span class="pl">'+(d.pr?'✓':'▶')+'</span>' +
+                   (d.pr ? 'Практика сделана' : esc(pr.title)+', 1 минута') + '</button>' : '') + '</section>';
+      }
+    }
+    if(focus){
+      var fs = sphere(focus.sphere);
+      h += '<section class="focus'+(focus.doneOn?' done':'')+'"><div class="focus-label">Главный фокус дня</div>' +
+           '<div class="focus-title">'+esc(focus.title)+'</div>' +
+           '<div class="focus-row"><span class="focus-sphere">'+fs.icon+' '+esc(fs.name)+'</span>' +
+           '<button class="focus-check" data-task="'+focus.id+'">'+(focus.doneOn?'Сделано ✓':'Отметить')+'</button></div></section>';
+    } else {
+      h += '<section class="invite"><h3>Фокус дня не выбран</h3><p>Выбери одно дело, которое сегодня важнее всего.</p>' +
+           '<button class="btn plum" id="startDay">Выбрать фокус</button></section>';
+    }
+  }
+
+  if(imp.length){
+    h += '<section class="block"><div class="block-head"><h2>Важное сегодня</h2></div>' + imp.map(taskCard).join('') + '</section>';
+  }
+
+  if(rec.length){
+    var rd = rec.filter(function(r){ return recDone(r,TODAY); }).length;
+    h += '<section class="block"><div class="block-head"><h2>Мои ритмы</h2><span>'+rd+' из '+rec.length+'</span></div>' +
+         '<div class="chips">' + rec.map(function(r){ return recChip(r, TODAY); }).join('') + '</div></section>';
+  }
+
+  if(others.length){
+    h += '<section class="block"><button class="more-toggle'+(ui.moreOpen?' open':'')+'" id="moreT">' +
+         '<span>Ещё на сегодня: '+others.length+'</span><span class="arr">⌄</span></button>' +
+         (ui.moreOpen ? '<div class="panel more-list">'+others.map(function(t){ return taskRow(t); }).join('')+'</div>' : '') + '</section>';
+  }
+
+  h += '<section class="block"><div class="progress">' +
+       '<svg class="ring" viewBox="0 0 64 64"><circle class="bgc" cx="32" cy="32" r="26"/>' +
+       '<circle class="fg" cx="32" cy="32" r="26" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-ratio)).toFixed(1)+'" transform="rotate(-90 32 32)"/>' +
+       '<text x="32" y="38" text-anchor="middle">'+done+'</text></svg>' +
+       '<div><div class="p1">'+esc(all ? phrase : "Сегодня свободный день")+'</div><div class="p2">'+done+' из '+all+' дел на сегодня</div></div></div></section>';
+
+  if(d.e){
+    var est = stateById(d.est);
+    h += '<section class="block"><div class="evening-note"><div class="q">Сегодня я довольна тем, что</div>' +
+         '<div class="a">'+esc(d.note||"прожила этот день")+'</div>' +
+         (est ? '<div class="q" style="margin-top:10px">Каким был день: '+est.icon+' '+esc(est.name)+'</div>' : '') + '</div></section>';
+  } else {
+    h += '<section class="block"><button class="btn '+(isEvening?'':'ghost')+'" id="endDay">🌙 Завершить день</button></section>';
+  }
+
+  document.getElementById("app").innerHTML = '<main>'+h+'</main>';
+
+  bindCommon();
+  var s1 = document.getElementById("startDay"); if(s1) s1.onclick = function(){ morningFlow(d.m ? 2 : 1); };
+  var s2 = document.getElementById("chState"); if(s2) s2.onclick = function(){ morningFlow(1, true); };
+  var s3 = document.getElementById("moreT"); if(s3) s3.onclick = function(){ ui.moreOpen = !ui.moreOpen; render(); };
+  var s4 = document.getElementById("endDay"); if(s4) s4.onclick = eveningFlow;
+  var s5 = document.getElementById("practice"); if(s5) s5.onclick = function(){ practiceFlow(st); };
+}
+
+function bindCommon(){
+  document.querySelectorAll("[data-task]").forEach(function(b){
+    b.onclick = function(){ var t = taskById(b.dataset.task); if(t) toggleTask(t, b); };
+  });
+  document.querySelectorAll("[data-rec]").forEach(function(b){
+    b.onclick = function(){
+      if(b.disabled) return;
+      var r = REC.filter(function(x){ return x.id===b.dataset.rec; })[0];
+      if(r) toggleRec(r, b.dataset.day, b);
+    };
+  });
+  document.querySelectorAll("[data-move]").forEach(function(b){
+    b.onclick = function(){ var t = taskById(b.dataset.move); if(t) moveFlow(t); };
+  });
+}
+
+/* ---------- Week ---------- */
+function renderWeek(){
+  var keys = weekKeys(ui.weekOffset);
+  if(keys.indexOf(ui.sel) < 0) ui.sel = keys.indexOf(TODAY) > -1 ? TODAY : keys[0];
+  loadDays(keys).then(function(){
+    var first = fromKey(keys[0]), last = fromKey(keys[6]);
+    var range = first.getMonth()===last.getMonth()
+      ? first.getDate()+"–"+last.getDate()+" "+MONTHS[last.getMonth()]
+      : shortDate(keys[0])+" – "+shortDate(keys[6]);
+
+    var h = '<h1 class="page-title">Моя неделя</h1>' +
+      '<div class="page-sub"><span>'+range+'</span><span class="wk-nav"><button id="wPrev" aria-label="Прошлая неделя">‹</button><button id="wNext" aria-label="Следующая неделя">›</button></span></div>';
+
+    h += '<div class="days">' + keys.map(function(k, i){
+      var spheres = {};
+      recFor(k).forEach(function(r){ spheres[r.sphere]=1; });
+      tasksFor(k).forEach(function(t){ spheres[t.sphere]=1; });
+      var dots = Object.keys(spheres).slice(0,4).map(function(id){ return '<i style="background:'+sphere(id).color+'"></i>'; }).join('');
+      return '<button class="day'+(k===TODAY?' today':'')+(k===ui.sel?' sel':'')+'" data-sel="'+k+'">' +
+        '<span class="wd">'+WD[i]+'</span><span class="n">'+fromKey(k).getDate()+'</span><span class="dots">'+dots+'</span></button>';
+    }).join('') + '</div>';
+
+    var rec = recFor(ui.sel), tasks = tasksFor(ui.sel);
+    var future = ui.sel > TODAY;
+    h += '<div class="sel-head"><h2>'+(ui.sel===TODAY ? 'Сегодня' : WD_FULL[isoDow(fromKey(ui.sel))-1].replace(/^./,function(c){return c.toUpperCase();}))+'</h2>' +
+         '<span>'+shortDate(ui.sel)+'</span></div>';
+    h += '<div class="panel">';
+    if(rec.length) h += '<div class="chips">' + rec.map(function(r){ return recChip(r, ui.sel, future); }).join('') + '</div>';
+    if(tasks.length) h += tasks.map(function(t){
+      return taskRow(t, t.doneOn ? '' : '<button class="mini-btn" data-move="'+t.id+'">Перенести</button>');
+    }).join('');
+    if(!rec.length && !tasks.length) h += '<div class="empty">Свободный день. Можно оставить его пустым.</div>';
+    h += '<button class="add-inline" id="addHere">+ Добавить на этот день</button></div>';
+
+    h += '<div class="sel-head"><h2>Регулярные дела</h2><span>'+REC.length+'</span></div><div class="panel">' +
+      (REC.length ? REC.map(function(r){
+        var s = sphere(r.sphere);
+        var lbl = r.days.slice().sort().map(function(n){ return WD[n-1].toLowerCase(); }).join(', ');
+        return '<div class="row rec-row"><span class="dot" style="background:'+s.color+'"></span><div class="txt"><div class="t">'+esc(r.title)+'</div>' +
+          '<div class="days-lbl">'+lbl+'</div></div><button class="mini-btn" data-delrec="'+r.id+'">Убрать</button></div>';
+      }).join('') : '<div class="empty">Пока нет регулярных дел.</div>') + '</div>';
+
+    document.getElementById("app").innerHTML = '<main>'+h+'</main>';
+    bindCommon();
+    document.querySelectorAll("[data-sel]").forEach(function(b){ b.onclick = function(){ ui.sel = b.dataset.sel; render(); }; });
+    document.getElementById("wPrev").onclick = function(){ ui.weekOffset--; ui.sel = weekKeys(ui.weekOffset)[0]; render(); };
+    document.getElementById("wNext").onclick = function(){ ui.weekOffset++; ui.sel = weekKeys(ui.weekOffset)[0]; render(); };
+    document.getElementById("addHere").onclick = function(){ addFlow(ui.sel); };
+    document.querySelectorAll("[data-delrec]").forEach(function(b){
+      b.onclick = function(){
+        var r = REC.filter(function(x){ return x.id===b.dataset.delrec; })[0];
+        if(!r) return;
+        var go = function(ok){ if(!ok) return; REC = REC.filter(function(x){ return x.id!==r.id; }); saveRec(); toast("Убрала из ритмов"); render(); };
+        if(inTelegram() && TG.showConfirm){ try{ TG.showConfirm("Убрать «"+r.title+"» из регулярных дел?", go); return; }catch(e){} }
+        go(window.confirm("Убрать «"+r.title+"» из регулярных дел?"));
+      };
+    });
+  });
+}
+
+/* ---------- Rhythm ---------- */
+function weekSummary(keys){
+  var per = keys.map(function(k){ return DAYS[k] && DAYS[k].done ? Object.keys(DAYS[k].done).length : 0; });
+  var stats = (DATA.stats||[]).map(function(s){
+    var dots = [], got = 0, plan = 0;
+    if(s.type==="recurring"){
+      var r = REC.filter(function(x){ return x.id===s.ref; })[0];
+      keys.forEach(function(k){
+        var planned = r && r.days.indexOf(isoDow(fromKey(k)))>-1;
+        var ok = !!(DAYS[k] && DAYS[k].done && DAYS[k].done[s.ref]);
+        if(planned) plan++; if(ok) got++;
+        dots.push(ok ? 'on' : planned ? 'plan' : '');
+      });
+      return {s:s, dots:dots, got:got, total:plan, val:got+' из '+plan};
+    }
+    keys.forEach(function(k){
+      var dn = DAYS[k] && DAYS[k].done ? DAYS[k].done : {};
+      var ok = Object.keys(dn).some(function(id){ return dn[id]===s.ref; });
+      if(ok) got++;
+      dots.push(ok ? 'on' : '');
+    });
+    return {s:s, dots:dots, got:got, total:7, val:got+' из 7'};
+  });
+  function top(field){
+    var c = {}, best = null;
+    keys.forEach(function(k){ var v = DAYS[k] && DAYS[k][field]; if(v){ c[v]=(c[v]||0)+1; if(!best || c[v]>c[best]) best=v; } });
+    return stateById(best);
+  }
+  var notes = JOY.filter(function(j){ return keys.indexOf(j.d) > -1; }).slice().reverse();
+  return {per:per, total:per.reduce(function(a,b){ return a+b; },0), stats:stats, topMorning:top("st"), topEvening:top("est"), notes:notes};
+}
+
+function renderRhythm(){
+  var keys = weekKeys(0), prev = weekKeys(-1);
+  loadDays(keys.concat(prev)).then(function(){
+    var W = weekSummary(keys);
+    var max = Math.max.apply(null, W.per.concat([1]));
+    var n = THREAD.n || 0;
+    var ms = (DATA.milestones||[]).filter(function(x){ return x > n; })[0];
+
+    var h = '<h1 class="page-title">Мой ритм</h1><div class="page-sub"><span>Эта неделя, '+shortDate(keys[0])+' – '+shortDate(keys[6])+'</span></div>';
+    h += '<section class="big"><div class="num">'+W.total+'</div><div class="cap">'+plural(W.total,"дело сделано","дела сделано","дел сделано")+' за неделю</div>' +
+         '<div class="bars">' + W.per.map(function(v,i){
+           var hh = Math.round((v/max)*58);
+           return '<div><b class="'+(v?'':'zero')+'" style="height:'+Math.max(hh,4)+'px"></b><span>'+WD[i]+'</span></div>';
+         }).join('') + '</div></section>';
+
+    h += '<section class="thread"><div class="knot">'+n+'</div><div><div class="t1">'+plural(n,"день","дня","дней")+' в ритме</div>' +
+         '<div class="t2">'+(ms ? 'Следующая отметка: '+ms+'. Пропуски не обнуляют нить' : 'Ты прошла все отметки. Нить продолжается')+'</div></div></section>';
+
+    W.stats.forEach(function(x){
+      h += '<div class="stat"><div class="stat-top"><span class="l">'+x.s.icon+' '+esc(x.s.label)+'</span><span class="v">'+x.val+'</span></div>' +
+           '<div class="stat-dots">'+x.dots.map(function(c){ return '<i class="'+c+'"></i>'; }).join('')+'</div></div>';
+    });
+
+    h += '<div class="sel-head"><h2>Состояния недели</h2><span>утро и вечер</span></div><div class="states-week">' +
+      keys.map(function(k,i){
+        var d = DAYS[k] || {}, a = stateById(d.st), b = stateById(d.est);
+        return '<div><span>'+WD[i]+'</span>'+(a?a.icon:'<em>·</em>')+(b?b.icon:'<em>·</em>')+'</div>';
+      }).join('') + '</div>';
+
+    var isSunday = isoDow(new Date()) === 7;
+    var prevHas = prev.some(function(k){ return DAYS[k] && (DAYS[k].m || DAYS[k].e || Object.keys(DAYS[k].done||{}).length); });
+    h += '<div class="sel-head"><h2>Письмо недели</h2></div><section class="envelope">' +
+      (isSunday
+        ? '<h3>Твоё письмо готово</h3><p>Неделя позади. Посмотри, какой она была.</p><button class="btn plum" id="letterNow">Открыть письмо</button>'
+        : '<h3>Придёт в воскресенье</h3><p>В нём будет твоя неделя: что получилось, какие были состояния и чем ты была довольна.</p>' +
+          '<button class="btn ghost" id="letterNow">Заглянуть в черновик</button>') +
+      (prevHas ? '<button class="link" id="letterPrev">Письмо прошлой недели</button>' : '') + '</section>';
+
+    h += '<div class="sel-head"><h2>Копилка радости</h2><span>'+JOY.length+'</span></div>';
+    h += JOY.length ? '<div class="joy">' + JOY.slice(0,12).map(function(j){
+      var s = stateById(j.s);
+      return '<div class="joy-item"><div class="jt">'+esc(j.t)+'</div><div class="jd">'+shortDate(j.d)+(s?', '+s.icon+' '+esc(s.name):'')+'</div></div>';
+    }).join('') + '</div>'
+    : '<div class="panel"><div class="empty">Здесь будут собираться твои вечерние «довольна тем, что…». Их можно перечитать в трудный день.</div></div>';
+
+    h += '<p class="quiet">Здесь нет долгов.<br>Только твой ритм.</p>';
+
+    document.getElementById("app").innerHTML = '<main>'+h+'</main>';
+    document.getElementById("letterNow").onclick = function(){ letterFlow(keys, !isSunday); };
+    var lp = document.getElementById("letterPrev"); if(lp) lp.onclick = function(){ letterFlow(prev, false); };
+  });
+}
+
+/* ================= Sheets ================= */
+var sheet = document.getElementById("sheet"), veil = document.getElementById("veil");
+var sheetCleanup = null;
+function openSheet(html){
+  sheet.innerHTML = '<div class="grab"></div>' + html;
+  sheet.scrollTop = 0;
+  requestAnimationFrame(function(){ veil.classList.add("show"); sheet.classList.add("show"); });
+  if(TG && TG.BackButton){ try{ TG.BackButton.show(); }catch(e){} }
+}
+function closeSheet(){
+  if(sheetCleanup){ sheetCleanup(); sheetCleanup = null; }
+  veil.classList.remove("show"); sheet.classList.remove("show");
+  if(TG && TG.BackButton){ try{ TG.BackButton.hide(); }catch(e){} }
+}
+function onBack(){ closeSheet(); }
+veil.onclick = closeSheet;
+
+function toast(msg, ms){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(function(){ t.classList.remove("show"); }, ms || 2300);
+}
+function stepsDots(n, total){ var s=''; for(var i=1;i<=total;i++) s += '<i class="'+(i<=n?'on':'')+'"></i>'; return '<div class="steps">'+s+'</div>'; }
+function statesGrid(sel){
+  return '<div class="states">' + DATA.states.map(function(s){
+    return '<button class="st'+(s.id===sel?' on':'')+'" data-st="'+s.id+'"><span class="e">'+s.icon+'</span>'+esc(s.name)+'</button>';
+  }).join('') + '</div>';
+}
+function sphereSeg(sel, cls){
+  return '<div class="seg '+(cls||'')+'">' + DATA.spheres.map(function(s){
+    return '<button data-s="'+s.id+'" class="'+(sel===s.id?'on':'')+'">'+s.icon+' '+esc(s.name)+'</button>';
+  }).join('') + '</div>';
+}
+function bindSphereSeg(onPick){
+  sheet.querySelectorAll("[data-s]").forEach(function(b){
+    b.onclick = function(){
+      sheet.querySelectorAll("[data-s]").forEach(function(x){ x.classList.toggle("on", x===b); });
+      onPick(b.dataset.s);
+    };
+  });
+}
+
+/* ---------- Morning ---------- */
+function morningFlow(startStep, onlyState){
+  var d = day(TODAY);
+  var m = { st:d.st||null, f:d.f||null, imp:(d.imp||[]).slice(), newSphere:"projects" };
+  function candidates(){ return overdue().concat(tasksFor(TODAY)).filter(function(t){ return !t.doneOn; }); }
+
+  function step1(){
+    openSheet(stepsDots(1, onlyState?1:3) + '<h3>'+esc(ph("morning","Каким ты хочешь прожить этот день?"))+'</h3><p class="hint">Выбери состояние, в котором хочешь прожить сегодня</p>' +
+      statesGrid(m.st) + '<button class="btn plum" id="n1"'+(m.st?'':' disabled')+'>'+(onlyState?'Сохранить':'Дальше')+'</button>');
+    sheet.querySelectorAll("[data-st]").forEach(function(b){
+      b.onclick = function(){
+        m.st = b.dataset.st;
+        sheet.querySelectorAll("[data-st]").forEach(function(x){ x.classList.toggle("on", x===b); });
+        document.getElementById("n1").disabled = false;
+        /* приложение сразу окрашивается в цвет выбранного состояния */
+        var st = stateById(m.st);
+        if(st){ document.documentElement.style.setProperty("--bg", st.bg||DEF_BG); document.documentElement.style.setProperty("--bg-deep", st.bgDeep||DEF_DEEP); }
+      };
+    });
+    document.getElementById("n1").onclick = function(){
+      if(onlyState){ d.st = m.st; saveDay(TODAY); closeSheet(); render(); return; }
+      step2();
+    };
+  }
+  function step2(){
+    var list = candidates();
+    openSheet(stepsDots(2,3) + '<h3>Что сегодня главное?</h3><p class="hint">Одно дело, которое хочется сделать обязательно</p>' +
+      list.map(function(t){ return '<button class="pick'+(m.f===t.id?' on':'')+'" data-p="'+t.id+'"><span class="t">'+esc(t.title)+'</span><span class="r"></span></button>'; }).join('') +
+      '<div class="lbl">Или впиши своё</div><input class="field" id="newF" placeholder="Например: дописать программу ретрита" maxlength="80">' +
+      '<div id="newFs" hidden><div class="lbl">Сфера</div>' + sphereSeg(m.newSphere, "small") + '</div>' +
+      '<button class="btn plum" id="n2">Дальше</button>');
+    sheet.querySelectorAll("[data-p]").forEach(function(b){
+      b.onclick = function(){
+        m.f = b.dataset.p;
+        sheet.querySelectorAll("[data-p]").forEach(function(x){ x.classList.toggle("on", x===b); });
+        document.getElementById("newF").value = ""; document.getElementById("newFs").hidden = true;
+      };
+    });
+    var inp = document.getElementById("newF");
+    inp.oninput = function(){
+      var has = !!inp.value.trim();
+      document.getElementById("newFs").hidden = !has;
+      if(has){ m.f = null; sheet.querySelectorAll("[data-p]").forEach(function(x){ x.classList.remove("on"); }); }
+    };
+    bindSphereSeg(function(id){ m.newSphere = id; });
+    document.getElementById("n2").onclick = function(){
+      var v = inp.value.trim();
+      if(v){ var t = {id:uid("t"), title:v, sphere:m.newSphere, date:TODAY, imp:true, doneOn:null}; TASKS.push(t); saveTasks(); m.f = t.id; }
+      if(!m.f){ toast("Выбери или впиши одно дело"); return; }
+      m.imp = m.imp.filter(function(id){ return id!==m.f; });
+      step3();
+    };
+  }
+  function step3(){
+    var list = candidates().filter(function(t){ return t.id!==m.f; });
+    openSheet(stepsDots(3,3) + '<h3>Ещё два важных</h3><p class="hint" id="impHint">Можно пропустить. Выбрано: '+m.imp.length+' из 2</p>' +
+      (list.length ? list.map(function(t){ return '<button class="pick'+(m.imp.indexOf(t.id)>-1?' on':'')+'" data-p="'+t.id+'"><span class="t">'+esc(t.title)+'</span><span class="r"></span></button>'; }).join('')
+                   : '<div class="empty">Других дел на сегодня нет</div>') +
+      '<button class="btn" id="n3">Начать день</button>');
+    sheet.querySelectorAll("[data-p]").forEach(function(b){
+      b.onclick = function(){
+        var id = b.dataset.p, i = m.imp.indexOf(id);
+        if(i>-1) m.imp.splice(i,1); else if(m.imp.length<2) m.imp.push(id); else { toast("Не больше двух: так легче"); return; }
+        b.classList.toggle("on", m.imp.indexOf(id)>-1);
+        document.getElementById("impHint").textContent = "Можно пропустить. Выбрано: "+m.imp.length+" из 2";
+      };
+    });
+    document.getElementById("n3").onclick = function(){
+      d.st = m.st; d.f = m.f; d.imp = m.imp; d.m = 1; saveDay(TODAY);
+      closeSheet(); haptic("success"); render(); markThread();
+      toast("Хорошего дня ✦");
+    };
+  }
+  if(startStep===2 && m.st) step2(); else step1();
+}
+
+/* ---------- Practice (breathing) ---------- */
+function practiceFlow(st){
+  var pr = st && pickDaily(st.practices, TODAY, 1);
+  if(!pr) return;
+  var inh = pr.inhale || 4, exh = pr.exhale || 6, total = 60;
+  openSheet('<h3>'+esc(pr.title)+'</h3><p class="hint">Одна минута для себя</p>' +
+    '<div class="breath"><div class="halo" id="halo"></div><div class="core" id="core">Готова?<small>1 минута</small></div></div>' +
+    '<p class="practice-text">'+esc(pr.text)+'</p><button class="btn plum" id="prGo">Начать</button>');
+  var timer = null, left = total, phase = "", phaseLeft = 0;
+  var halo = document.getElementById("halo"), core = document.getElementById("core"), btn = document.getElementById("prGo");
+  function setPhase(p){
+    phase = p; phaseLeft = p==="in" ? inh : exh;
+    halo.style.transitionDuration = phaseLeft + "s";
+    halo.style.transform = p==="in" ? "scale(1)" : "scale(.62)";
+  }
+  function paint(){ core.innerHTML = (phase==="in" ? "Вдох" : "Выдох") + "<small>" + left + " сек</small>"; }
+  function finish(){
+    clearInterval(timer); timer = null;
+    var d = day(TODAY); d.pr = 1; saveDay(TODAY);
+    core.innerHTML = "Спасибо<small>практика сделана</small>";
+    halo.style.transitionDuration = "1.2s"; halo.style.transform = "scale(.8)";
+    btn.textContent = "Вернуться в день"; btn.onclick = function(){ closeSheet(); render(); };
+    var p = centerOf(core); burst(p[0], p[1], 16); haptic("success");
+  }
+  btn.onclick = function(){
+    if(timer) return;
+    btn.textContent = "Закончить раньше";
+    btn.classList.remove("plum"); btn.classList.add("ghost");
+    btn.onclick = finish;
+    setPhase("in"); paint();
+    timer = setInterval(function(){
+      left--; phaseLeft--;
+      if(left <= 0){ finish(); return; }
+      if(phaseLeft <= 0){ setPhase(phase==="in" ? "out" : "in"); haptic(); }
+      paint();
+    }, 1000);
+  };
+  sheetCleanup = function(){ if(timer){ clearInterval(timer); timer = null; } };
+}
+
+/* ---------- Evening ---------- */
+function eveningFlow(){
+  var d = day(TODAY), e = { est:d.est||null, note:d.note||"" };
+
+  function doneItems(){
+    var items = [];
+    recFor(TODAY).forEach(function(r){ if(recDone(r,TODAY)) items.push(r); });
+    TASKS.forEach(function(t){ if(t.doneOn===TODAY) items.push(t); });
+    return items;
+  }
+  function step1(){
+    var items = doneItems();
+    openSheet(stepsDots(1,4) + '<h3>Что получилось сегодня</h3><p class="hint">Посмотри на это и скажи себе спасибо</p>' +
+      '<div class="panel done-list">' + (items.length ? items.map(function(it){
+        var s = sphere(it.sphere);
+        return '<div class="row"><span class="dot" style="background:'+s.color+'"></span><div class="txt"><div class="t">'+esc(it.title)+'</div></div><span class="check on">'+CHECK+'</span></div>';
+      }).join('') : '<div class="empty">Сегодня день без галочек. Отдых тоже часть ритма.</div>') + '</div>' +
+      '<button class="btn plum" id="e1" style="margin-top:18px">Дальше</button>');
+    document.getElementById("e1").onclick = step2;
+  }
+  function step2(){
+    var left = overdue().concat(tasksFor(TODAY)).filter(function(t){ return !t.doneOn; });
+    if(!left.length){ step3(); return; }
+    var opts = ''; for(var i=2;i<=7;i++){ var k = dkey(addDays(new Date(), i)); var dd = fromKey(k); opts += '<option value="'+k+'">'+WD[isoDow(dd)-1]+', '+dd.getDate()+'</option>'; }
+    openSheet(stepsDots(2,4) + '<h3>Что не успела</h3><p class="hint">Реши для каждого дела. Отпустить — тоже решение</p>' +
+      left.map(function(t){
+        return '<div class="move" data-mv="'+t.id+'"><div class="t">'+esc(t.title)+'</div><div class="res"></div><div class="acts">' +
+          '<button data-a="tom">Завтра</button><select data-a="day" aria-label="На другой день"><option value="">Другой день</option>'+opts+'</select>' +
+          '<button data-a="rel">Отпустить</button></div></div>';
+      }).join('') + '<button class="btn plum" id="e2" style="margin-top:18px">Дальше</button>');
+    sheet.querySelectorAll(".move").forEach(function(row){
+      var t = taskById(row.dataset.mv);
+      function resolve(txt){ row.classList.add("resolved"); row.querySelector(".res").textContent = txt; haptic(); }
+      row.querySelector('[data-a="tom"]').onclick = function(){ t.date = TOMORROW; saveTasks(); resolve("Перенесено на завтра"); };
+      row.querySelector('[data-a="day"]').onchange = function(ev){ if(!ev.target.value) return; t.date = ev.target.value; saveTasks(); resolve("Перенесено: "+shortDate(t.date)); };
+      row.querySelector('[data-a="rel"]').onclick = function(){ TASKS = TASKS.filter(function(x){ return x.id!==t.id; }); saveTasks(); resolve("Отпущено"); };
+    });
+    document.getElementById("e2").onclick = step3;
+  }
+  function step3(){
+    openSheet(stepsDots(3,4) + '<h3>Каким был день на самом деле?</h3><p class="hint">Без оценок, просто заметь</p>' +
+      statesGrid(e.est) + '<button class="btn plum" id="e3"'+(e.est?'':' disabled')+'>Дальше</button>');
+    sheet.querySelectorAll("[data-st]").forEach(function(b){
+      b.onclick = function(){ e.est = b.dataset.st; sheet.querySelectorAll("[data-st]").forEach(function(x){ x.classList.toggle("on", x===b); }); document.getElementById("e3").disabled = false; };
+    });
+    document.getElementById("e3").onclick = step4;
+  }
+  function step4(){
+    openSheet(stepsDots(4,4) + '<h3>Сегодня я довольна тем, что…</h3><p class="hint">Одной строкой. Фраза попадёт в копилку радости</p>' +
+      '<textarea class="field" id="note" maxlength="140" placeholder="…нашла время на прогулку">'+esc(e.note)+'</textarea>' +
+      '<button class="btn" id="e4">Завершить день</button>');
+    document.getElementById("e4").onclick = function(){
+      e.note = document.getElementById("note").value.trim();
+      d.est = e.est; d.note = e.note; d.e = 1; saveDay(TODAY);
+      JOY = JOY.filter(function(j){ return j.d !== TODAY; });
+      if(e.note){ JOY.unshift({d:TODAY, t:e.note, s:e.est}); saveJoy(); }
+      closeSheet(); haptic("success"); render(); markThread();
+      toast(ph("evening","День завершён"));
+    };
+  }
+  step1();
+}
+
+/* ---------- Letter of the week ---------- */
+function letterFlow(keys, draft){
+  loadDays(keys).then(function(){
+    var W = weekSummary(keys);
+    var name = (DATA.app && DATA.app.ownerName) || "";
+    var h = '<p class="hi">Дорогая '+esc(name)+',</p>';
+    h += '<p>'+(draft ? 'Пока неделя в пути, но ты уже сделала ' : 'На этой неделе ты сделала ')+W.total+' '+plural(W.total,"дело","дела","дел")+'.</p>';
+    var parts = W.stats.map(function(x){ return esc(x.s.label.toLowerCase())+': '+x.val; });
+    if(parts.length) h += '<p>'+parts.join('; ').replace(/^./,function(c){return c.toUpperCase();})+'.</p>';
+    if(W.topMorning) h += '<p>Чаще всего утром ты выбирала '+W.topMorning.icon+' '+esc(W.topMorning.name.toLowerCase())+
+      (W.topEvening ? ', а вечером дни чаще были про '+W.topEvening.icon+' '+esc(W.topEvening.name.toLowerCase()) : '')+'.</p>';
+    if(W.notes.length){
+      h += '<p>Ты была довольна тем, что:</p><ul>' + W.notes.map(function(j){ return '<li>'+esc(j.t)+'</li>'; }).join('') + '</ul>';
+    }
+    h += '<p>'+esc(ph("letterClosing","Ты была с собой — и это главное."))+'</p>';
+    h += '<p class="sign">'+esc(ph("letterSign","Твой ритм ✦"))+'</p>';
+    openSheet('<h3>'+(draft ? 'Черновик письма' : 'Письмо недели')+'</h3><p class="hint">'+shortDate(keys[0])+' – '+shortDate(keys[6])+'</p>' +
+      '<div class="letter">'+h+'</div><button class="btn plum" id="lClose">Спасибо</button>');
+    document.getElementById("lClose").onclick = closeSheet;
+    if(!draft){ var p = centerOf(sheet.querySelector(".letter")); setTimeout(function(){ burst(p[0], window.innerHeight*0.3, 16); }, 350); }
+  });
+}
+
+/* ---------- Move ---------- */
+function moveFlow(t){
+  var chips = '';
+  for(var i=0;i<=7;i++){
+    var k = dkey(addDays(new Date(), i));
+    if(k===t.date) continue;
+    chips += '<button data-to="'+k+'">'+(i===0?'Сегодня':i===1?'Завтра':WD[isoDow(fromKey(k))-1]+', '+fromKey(k).getDate())+'</button>';
+  }
+  openSheet('<h3>Перенести дело</h3><p class="hint">'+esc(t.title)+'</p><div class="seg">'+chips+'</div>' +
+    '<button class="btn ghost" id="rel">Отпустить это дело</button>');
+  sheet.querySelectorAll("[data-to]").forEach(function(b){
+    b.onclick = function(){ t.date = b.dataset.to; saveTasks(); closeSheet(); toast("Перенесено: "+shortDate(t.date)); render(); };
+  });
+  document.getElementById("rel").onclick = function(){ TASKS = TASKS.filter(function(x){ return x.id!==t.id; }); saveTasks(); closeSheet(); toast("Отпущено"); render(); };
+}
+
+/* ---------- Add ---------- */
+function addFlow(presetDate){
+  var a = { title:"", sphere:DATA.spheres[0].id, when: presetDate && presetDate!==TODAY ? (presetDate===TOMORROW?"tom":"date") : "today",
+            date: presetDate || TODAY, days:[], imp:false };
+  var whenBtns = [["today","Сегодня"],["tom","Завтра"],["date","Выбрать день"],["repeat","Повторять"]].map(function(w){
+    return '<button data-w="'+w[0]+'" class="'+(a.when===w[0]?'on':'')+'">'+w[1]+'</button>';
+  }).join('');
+  openSheet('<h3>Новое дело</h3><p class="hint">Коротко и понятно: так легче начать</p>' +
+    '<input class="field" id="aT" placeholder="Что сделать?" maxlength="80">' +
+    '<div class="lbl">Сфера</div>' + sphereSeg(a.sphere) +
+    '<div class="lbl">Когда</div><div class="seg" id="aWhen">'+whenBtns+'</div>' +
+    '<div id="aExtra"></div>' +
+    '<button class="btn plum" id="aOk">Добавить</button>');
+
+  /* Меняется только нижняя часть формы: поле с текстом и клавиатура остаются на месте */
+  function drawExtra(){
+    var x = '';
+    if(a.when==="date") x += '<input class="field" type="date" id="aD" value="'+a.date+'" min="'+TODAY+'">';
+    if(a.when==="repeat") x += '<div class="wds">' + WD.map(function(w,i){ return '<button data-wd="'+(i+1)+'" class="'+(a.days.indexOf(i+1)>-1?'on':'')+'">'+w+'</button>'; }).join('') + '</div>';
+    else x += '<div class="toggle-row"><span>⭐ Важное дело</span><button class="sw'+(a.imp?' on':'')+'" id="aI" aria-label="Важное"></button></div>';
+    var box = document.getElementById("aExtra"); box.innerHTML = x;
+    var dd = document.getElementById("aD"); if(dd) dd.onchange = function(){ a.date = dd.value; };
+    var ii = document.getElementById("aI"); if(ii) ii.onclick = function(){ a.imp = !a.imp; ii.classList.toggle("on", a.imp); };
+    box.querySelectorAll("[data-wd]").forEach(function(b){
+      b.onclick = function(){ var n=+b.dataset.wd, i=a.days.indexOf(n); if(i>-1) a.days.splice(i,1); else a.days.push(n); b.classList.toggle("on", a.days.indexOf(n)>-1); };
+    });
+  }
+  bindSphereSeg(function(id){ a.sphere = id; });
+  sheet.querySelectorAll("[data-w]").forEach(function(b){
+    b.onclick = function(){
+      a.when = b.dataset.w;
+      sheet.querySelectorAll("[data-w]").forEach(function(x){ x.classList.toggle("on", x===b); });
+      drawExtra();
+    };
+  });
+  drawExtra();
+
+  document.getElementById("aOk").onclick = function(){
+    var title = document.getElementById("aT").value.trim();
+    if(!title){ toast("Напиши, что сделать"); return; }
+    if(a.when==="repeat"){
+      if(!a.days.length){ toast("Выбери дни недели"); return; }
+      REC.push({id:uid("r"), title:title, sphere:a.sphere, days:a.days.slice().sort()}); saveRec();
+      toast("Добавлено в ритмы");
+    } else {
+      var k = a.when==="today" ? TODAY : a.when==="tom" ? TOMORROW : (a.date || TODAY);
+      var t = {id:uid("t"), title:title, sphere:a.sphere, date:k, imp:a.imp, doneOn:null};
+      TASKS.push(t); saveTasks();
+      if(a.imp && k===TODAY){ var d = day(TODAY); if(d.m){ d.imp = d.imp||[]; if(d.imp.length<2){ d.imp.push(t.id); saveDay(TODAY); } } }
+      toast(k===TODAY ? "Добавлено на сегодня" : "Добавлено: "+shortDate(k));
+    }
+    haptic(); closeSheet(); render();
+  };
+}
+
+/* ================= Navigation ================= */
+document.querySelectorAll(".tab").forEach(function(b){
+  b.onclick = function(){ ui.tab = b.dataset.tab; if(ui.tab==="week"){ ui.weekOffset = 0; ui.sel = TODAY; } window.scrollTo(0,0); render(); };
+});
+document.getElementById("fab").onclick = function(){ addFlow(ui.tab==="week" ? ui.sel : TODAY); };
+
+loadTelegramSDK(function(){ setupTelegram(); boot(); });
+})();
+</script>
+</body>
+</html>
